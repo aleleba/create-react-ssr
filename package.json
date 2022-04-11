@@ -1,0 +1,40 @@
+{
+  "name": "create-react-ssr",
+  "version": "1.0.0",
+  "description": "Starter Kit de server side render de react",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack serve",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aleleba/create-react-ssr.git"
+  },
+  "keywords": [
+    "react",
+    "ssr"
+  ],
+  "author": "Alejandro Lembke Barrientos",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aleleba/create-react-ssr/issues"
+  },
+  "homepage": "https://github.com/aleleba/create-react-ssr#readme",
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.4",
+    "html-loader": "^3.1.0",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
+  }
+}
