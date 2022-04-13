@@ -1,19 +1,25 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { config: { portDev, portReloadDev } } = require('./src/config')
-
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './frontend/index.js',
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js',
+        publicPath: '/',
     },
     resolve: {
         extensions: ['.js', '.jsx'],
+        alias: {
+            '@components': path.resolve(__dirname, 'src/components/'),
+            '@styles': path.resolve(__dirname, 'frontend/styles/'),
+        }
     },
-    mode: 'development',
+    mode: 'production',
     module: {
         rules: [
             {
@@ -27,7 +33,7 @@ module.exports = {
                 test: /\.html$/,
                 use: [
                     { loader: 'html-loader' }
-                ],
+                ]
             },
             {
                 test: /\.s[ac]ss$/,
@@ -35,32 +41,25 @@ module.exports = {
                     'style-loader',
                     'css-loader',
                     'sass-loader',
-                ] 
+                ], 
             },
-        ]
+        ],
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: './public/index.html',
-            filename: './index.html',
+            filename: './index.html'
         }),
         new MiniCssExtractPlugin({
-            filename: '[name].css',
+            filename: '[name].css'
         }),
+        new CleanWebpackPlugin(),
     ],
-    devServer: {
-        static: {
-            directory: path.join(__dirname, 'dist')
-        },
-        allowedHosts: "all",
-        compress: true,
-        port: portDev,
-        hot: true,
-        client: {
-            reconnect: true,
-            webSocketURL: {
-                port: portReloadDev ? portReloadDev : portDev,
-            }
-        },
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new CssMinimizerPlugin(),
+            new TerserPlugin(),
+        ],
     },
 }
