@@ -1,11 +1,12 @@
 const path = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { config: { portDev, portReloadDev } } = require('./config')
+// const { config: { portDev, portReloadDev } } = require('./config');
 
 
 module.exports = {
-    entry: './frontend/index.js',
+    entry: ['webpack-hot-middleware/client?path=/reload_wss&timeout=2000&overlay=false&reload=true', './frontend/index.js'],
     output: {
         path: path.resolve(__dirname, 'build'),
         filename: 'bundle.js',
@@ -40,6 +41,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
             filename: './index.html',
@@ -48,7 +50,7 @@ module.exports = {
             filename: '[name].css',
         }),
     ],
-    devServer: {
+    /* devServer: {
         static: {
             directory: path.join(__dirname, 'build')
         },
@@ -62,5 +64,5 @@ module.exports = {
                 port: portReloadDev ? portReloadDev : portDev,
             }
         },
-    },
+    }, */
 }
