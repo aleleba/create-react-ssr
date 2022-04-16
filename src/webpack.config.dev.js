@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 // const { config: { portDev, portReloadDev } } = require('./config');
 
 
@@ -42,6 +43,7 @@ module.exports = {
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
+        new ReactRefreshWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: './public/index.html',
             filename: './index.html',
