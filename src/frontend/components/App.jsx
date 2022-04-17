@@ -1,5 +1,6 @@
 import React from 'react';
+import PrincipalRoutes from './PrincipalRoutes';
 
-const App = () => <h1>Hello React!</h1>
+const App = () => <PrincipalRoutes />
 
 export default App;

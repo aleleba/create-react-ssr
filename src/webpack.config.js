@@ -1,5 +1,4 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -9,7 +8,7 @@ module.exports = {
     entry: './frontend/index.js',
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: 'bundle.js',
+        filename: 'assets/app.js',
         publicPath: '/',
     },
     resolve: {
@@ -30,15 +29,9 @@ module.exports = {
                 },
             },
             {
-                test: /\.html$/,
+                test: /\.(css|sass|scss)$/,
                 use: [
-                    { loader: 'html-loader' }
-                ]
-            },
-            {
-                test: /\.s[ac]ss$/,
-                use: [
-                    'style-loader',
+                    MiniCssExtractPlugin.loader,
                     'css-loader',
                     'sass-loader',
                 ], 
@@ -46,12 +39,8 @@ module.exports = {
         ],
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            template: './public/index.html',
-            filename: './index.html'
-        }),
         new MiniCssExtractPlugin({
-            filename: '[name].css'
+            filename: 'assets/app.css',
         }),
         new CleanWebpackPlugin(),
     ],
