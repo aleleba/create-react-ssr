@@ -1,5 +1,5 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import { hydrateRoot } from 'react-dom/client';
 //Router
 import { BrowserRouter as Router } from 'react-router-dom';
 //History
@@ -10,7 +10,6 @@ import { Provider } from 'react-redux';
 import { composeWithDevTools as composeWithDevToolsWeb } from 'redux-devtools-extension';
 import { config } from '../config';
 import reducer from './reducers';
-import initialState from './reducers/initialState';
 
 import App from './components/App';
 import './styles/global.sass';
@@ -28,26 +27,44 @@ const composeEnhancers = composeWithDevToolsWeb({
     // Specify here name, actionsBlacklist, actionsCreators and other options
 });
 
+const preloadedState = window.__PRELOADED_STATE__
+
 const store = env === 'development' ? createStore(
     reducer,
-    initialState,
+    preloadedState,
     composeEnhancers(),
 ) : createStore(
     reducer,
-    initialState,
+    preloadedState,
 )
 
+delete window.__PRELOADED_STATE__
+
 const container = document.getElementById('app');
-const root = createRoot(container);
 const history = createBrowserHistory()
 
-root.render(
+const root = hydrateRoot(container, 
     <Provider store={store}>
         <Router history={history}>
-            <App tab="home" />
+            <App />
+        </Router>
+    </Provider>,
+    //Add this comment to update later app and remove warning
+    /*{ 
+        onRecoverableError: (error) => {
+          console.error("recoverable", error);
+        }
+    }, */
+);
+
+// Use root.render to update later the app
+/* root.render(
+    <Provider store={store}>
+        <Router history={history}>
+            <App />
         </Router>
     </Provider>
-);
+); */
 
 if (module.hot) {
     module.hot.accept();
