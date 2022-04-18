@@ -1,4 +1,5 @@
 const path = require('path');
+const dotenv = require('dotenv').config();
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
@@ -40,6 +41,9 @@ module.exports = {
         new ReactRefreshWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: 'assets/app.css',
+        }),
+        new webpack.DefinePlugin({
+            'process.env': JSON.stringify(dotenv.parsed),
         }),
     ],
     /* devServer: {

@@ -11,7 +11,14 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 //Dependencies of SSR
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+//Router
 import { StaticRouter } from "react-router-dom/server";
+//Redux
+import { createStore } from 'redux'; //, applyMiddleware
+import { Provider } from 'react-redux';
+import reducer from '../frontend/reducers';
+import initialState from '../frontend/reducers/initialState';
+//App
 import App from '../frontend/components/App';
 
 const { env, port } = config
@@ -55,10 +62,13 @@ const setResponse = (html) => {
 }
 
 const renderApp = (req, res) => {
+    const store = createStore(reducer, initialState)
     const html = renderToString(
-        <StaticRouter location={req.url}>
-            <App />
-        </StaticRouter>
+        <Provider store={store}>
+            <StaticRouter location={req.url}>
+                <App />
+            </StaticRouter>
+        </Provider>
     )
     res.send(setResponse(html));
 };
