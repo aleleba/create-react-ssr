@@ -48,4 +48,23 @@ module.exports = {
             'process.env': JSON.stringify(dotenv.parsed),
         }),
     ],
+    optimization: {
+        splitChunks: {
+            chunks: 'async',
+            cacheGroups: {
+                vendors: {
+                    name: 'vendors',
+                    chunks: 'all',
+                    reuseExistingChunk: true,
+                    priority: 1,
+                    filename: 'assets/vendor.js',
+                    enforce: true,
+                    test (module, chunks){
+                    const name = module.nameForCondition && module.nameForCondition();
+                    return chunks.name !== 'vendors' && /[\\/]node_modules[\\/]/.test(name);  
+                    },
+                },
+            },
+        },
+    },
 }

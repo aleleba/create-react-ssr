@@ -19,6 +19,8 @@ import { createStore } from 'redux'; //, applyMiddleware
 import { Provider } from 'react-redux';
 import reducer from '../frontend/reducers';
 import initialState from '../frontend/reducers/initialState';
+//Get Hashes
+import getHashManifest from './getHashManifest';
 //App
 import App from '../frontend/components/App';
 
@@ -41,13 +43,29 @@ if(env === 'development'){
     }));
 }else{
     app
+    .use((req, res, next) => {
+        if(!req.hashManifest) req.hashManifest = getHashManifest();
+        next();
+    })
     .use(express.static(`${__dirname}/../build`))
     .use(helmet())
     .use(helmet.permittedCrossDomainPolicies())
+    .use(helmet({
+        contentSecurityPolicy: {
+            directives: {
+              ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+              "script-src": ["'self'", "'unsafe-inline'"],//"example.com"
+            },
+        },
+    }))
     .disable('x-powered-by');
 }
 
-const setResponse = (html, preloadedState) => {
+const setResponse = (html, preloadedState, manifest) => {
+    const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
+    const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
+    const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
+
     return(`
     <!DOCTYPE html>
     <html lang="es">
@@ -55,7 +73,7 @@ const setResponse = (html, preloadedState) => {
             <meta charset="UTF-8">
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link href="assets/app.css" rel="stylesheet" type="text/css"></link>
+            <link href="${mainStyles}" rel="stylesheet" type="text/css"></link>
             <title>App</title>
         </head>
         <body>
@@ -63,7 +81,8 @@ const setResponse = (html, preloadedState) => {
             <script>
                 window.__PRELOADED_STATE__ = ${JSON.stringify(preloadedState).replace(/</g, '\\u003c')}
             </script>
-            <script src="assets/app.js" type="text/javascript"></script>
+            <script src="${mainBuild}" type="text/javascript"></script>
+            <script src="${vendorBuild}" type="text/javascript"></script>
         </body>
     </html>
     `)
@@ -79,7 +98,7 @@ const renderApp = (req, res) => {
             </StaticRouter>
         </Provider>
     )
-    res.send(setResponse(html, preloadedState));
+    res.send(setResponse(html, preloadedState, req.hashManifest));
 };
 
 app.get('*', renderApp)
