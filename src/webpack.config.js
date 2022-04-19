@@ -1,5 +1,6 @@
 const path = require('path');
 const dotenv = require('dotenv').config();
+const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -15,7 +16,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.jsx'],
         alias: {
-            '@components': path.resolve(__dirname, 'src/components/'),
+            '@components': path.resolve(__dirname, 'frontend/components/'),
             '@styles': path.resolve(__dirname, 'frontend/styles/'),
         }
     },
@@ -23,7 +24,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(js|jsx|tsx)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',

@@ -2,6 +2,7 @@
 import express from 'express';
 import { config } from '../config';
 import webpack from 'webpack';
+import helmet from 'helmet';
 
 //Dependencies of HotReloading
 import webpackConfig from '../webpack.config.dev';
@@ -26,8 +27,6 @@ const { env, port } = config
 const app = express();
 
 if(env === 'development'){
-    console.log('Development Config')
-    
     const compiler = webpack(webpackConfig);
     const serverConfig = { 
         serverSideRender: true,
@@ -40,6 +39,12 @@ if(env === 'development'){
         path: "/reload_wss",
         heartbeat: 1000,
     }));
+}else{
+    app
+    .use(express.static(`${__dirname}/../build`))
+    .use(helmet())
+    .use(helmet.permittedCrossDomainPolicies())
+    .disable('x-powered-by');
 }
 
 const setResponse = (html, preloadedState) => {
