@@ -13,7 +13,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 //Router
-import { StaticRouter } from "react-router-dom/server";
+import { StaticRouter } from 'react-router-dom/server';
 //Redux
 import { createStore } from 'redux'; //, applyMiddleware
 import { Provider } from 'react-redux';
@@ -24,49 +24,49 @@ import getHashManifest from './getHashManifest';
 //App
 import App from '../frontend/components/App';
 
-const { env, port } = config
+const { env, port } = config;
 
 const app = express();
 
 if(env === 'development'){
-    const compiler = webpack(webpackConfig);
-    const serverConfig = { 
-        serverSideRender: true,
-        publicPath: webpackConfig.output.publicPath,
-    };
+	const compiler = webpack(webpackConfig);
+	const serverConfig = { 
+		serverSideRender: true,
+		publicPath: webpackConfig.output.publicPath,
+	};
 
-    app
-    .use(webpackDevMiddleware(compiler, serverConfig))
-    .use(webpackHotMiddleware(compiler, {
-        path: "/reload_wss",
-        heartbeat: 1000,
-    }));
+	app
+		.use(webpackDevMiddleware(compiler, serverConfig))
+		.use(webpackHotMiddleware(compiler, {
+			path: '/reload_wss',
+			heartbeat: 1000,
+		}));
 }else{
-    app
-    .use((req, res, next) => {
-        if(!req.hashManifest) req.hashManifest = getHashManifest();
-        next();
-    })
-    .use(express.static(`${__dirname}/../build`))
-    .use(helmet())
-    .use(helmet.permittedCrossDomainPolicies())
-    .use(helmet({
-        contentSecurityPolicy: {
-            directives: {
-              ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-              "script-src": ["'self'", "'unsafe-inline'"],//"example.com"
-            },
-        },
-    }))
-    .disable('x-powered-by');
+	app
+		.use((req, res, next) => {
+			if(!req.hashManifest) req.hashManifest = getHashManifest();
+			next();
+		})
+		.use(express.static(`${__dirname}/../build`))
+		.use(helmet())
+		.use(helmet.permittedCrossDomainPolicies())
+		.use(helmet({
+			contentSecurityPolicy: {
+				directives: {
+					...helmet.contentSecurityPolicy.getDefaultDirectives(),
+					'script-src': ['\'self\'', '\'unsafe-inline\''],//"example.com"
+				},
+			},
+		}))
+		.disable('x-powered-by');
 }
 
 const setResponse = (html, preloadedState, manifest) => {
-    const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
-    const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
-    const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
+	const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
+	const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
+	const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
 
-    return(`
+	return(`
     <!DOCTYPE html>
     <html lang="es">
         <head>
@@ -85,25 +85,25 @@ const setResponse = (html, preloadedState, manifest) => {
             <script src="${vendorBuild}" type="text/javascript"></script>
         </body>
     </html>
-    `)
-}
-
-const renderApp = (req, res) => {
-    const store = createStore(reducer, initialState)
-    const preloadedState = store.getState();
-    const html = renderToString(
-        <Provider store={store}>
-            <StaticRouter location={req.url}>
-                <App />
-            </StaticRouter>
-        </Provider>
-    )
-    res.send(setResponse(html, preloadedState, req.hashManifest));
+    `);
 };
 
-app.get('*', renderApp)
+const renderApp = (req, res) => {
+	const store = createStore(reducer, initialState);
+	const preloadedState = store.getState();
+	const html = renderToString(
+		<Provider store={store}>
+			<StaticRouter location={req.url}>
+				<App />
+			</StaticRouter>
+		</Provider>
+	);
+	res.send(setResponse(html, preloadedState, req.hashManifest));
+};
+
+app.get('*', renderApp);
 
 app.listen(port, (err) => {
-    if(err) console.error(err)
-    else console.log(`Server running on port ${port}`);
+	if(err) console.error(err);
+	else console.log(`Server running on port ${port}`);
 });

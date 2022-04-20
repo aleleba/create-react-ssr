@@ -1,3 +1,3 @@
-let initialState = {}
+let initialState = {};
 
-export default  initialState
+export default  initialState;

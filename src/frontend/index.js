@@ -1,10 +1,10 @@
 import React from 'react';
 import { hydrateRoot } from 'react-dom/client';
-//Router
+// Router
 import { BrowserRouter as Router } from 'react-router-dom';
-//History
+// History
 import { createBrowserHistory } from 'history';
-//Redux
+// Redux
 import { createStore } from 'redux'; //, applyMiddleware
 import { Provider } from 'react-redux';
 import { composeWithDevTools as composeWithDevToolsWeb } from 'redux-devtools-extension';
@@ -14,43 +14,44 @@ import reducer from './reducers';
 import App from './components/App';
 import './styles/global.sass';
 
-//Redux DevTools
+// Redux DevTools
 /* declare global {
     interface Window {
         __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
     }
 } */
 
-const { env } = config
+const { env } = config;
 
 const composeEnhancers = composeWithDevToolsWeb({
-    // Specify here name, actionsBlacklist, actionsCreators and other options
+	// Specify here name, actionsBlacklist, actionsCreators and other options
 });
 
-const preloadedState = window.__PRELOADED_STATE__
+const preloadedState = window.__PRELOADED_STATE__;
 
 const store = env === 'development' ? createStore(
-    reducer,
-    preloadedState,
-    composeEnhancers(),
+	reducer,
+	preloadedState,
+	composeEnhancers(),
 ) : createStore(
-    reducer,
-    preloadedState,
-)
+	reducer,
+	preloadedState,
+);
 
-delete window.__PRELOADED_STATE__
+delete window.__PRELOADED_STATE__;
 
 const container = document.getElementById('app');
-const history = createBrowserHistory()
+const history = createBrowserHistory();
 
-const root = hydrateRoot(container, 
-    <Provider store={store}>
-        <Router history={history}>
-            <App />
-        </Router>
-    </Provider>,
-    //Add this comment to update later app and remove warning
-    /*{ 
+// add "const root" to be able to rerender.
+hydrateRoot(container,
+	<Provider store={store}>
+		<Router history={history}>
+			<App />
+		</Router>
+	</Provider>,
+	// Add this comment to update later app and remove warning
+	/* { 
         onRecoverableError: (error) => {
           console.error("recoverable", error);
         }
@@ -67,5 +68,5 @@ const root = hydrateRoot(container,
 ); */
 
 if (module.hot) {
-    module.hot.accept();
+	module.hot.accept();
 }
