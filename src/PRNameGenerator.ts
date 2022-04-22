@@ -7,5 +7,8 @@ const PRName = function () {
 	}
 	return 'PR-'+ID;
 };
-  
+
 console.log(PRName());
+
+export default PRName
+  

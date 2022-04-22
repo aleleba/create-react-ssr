@@ -6,28 +6,31 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
-	entry: ['webpack-hot-middleware/client?path=/reload_wss&timeout=2000&overlay=false&reload=true', './frontend/index.js'],
+	entry: ['webpack-hot-middleware/client?path=/reload_wss&timeout=2000&reload=true&autoConnect=true', './frontend/index.tsx'],
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'assets/app.js',
+		publicPath: '/',
 	},
 	resolve: {
-		extensions: ['.js', '.jsx'],
+		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
 		alias: {
 			'@components': path.resolve(__dirname, 'frontend/components/'),
 			'@styles': path.resolve(__dirname, 'frontend/styles/'),
 		}
 	},
+	devtool: 'inline-source-map',
 	mode: 'development',
+	context: __dirname,
 	module: {
 		rules: [
 			{
-				test: /\.(js|jsx|tsx)$/,
-				exclude: /node_modules/,
+				test: /\.(js|jsx|ts|tsx)$/,
 				use: {
 					loader: 'babel-loader',
 					options: { plugins: ['react-refresh/babel'] }
 				},
+				exclude: /node_modules/,
 			},
 			{
 				test: /\.(css|sass|scss)$/,

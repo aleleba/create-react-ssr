@@ -3,7 +3,7 @@ import InitialComponent from '../frontend/components/InitialComponent';
 import OtherComponent from '../frontend/components/OtherComponent';
 
 const OTHER_COMPONENT = {
-	path: 'other-component',
+	path: '/other-component',
 	element: <OtherComponent />
 };
 

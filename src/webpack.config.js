@@ -10,14 +10,14 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
 module.exports = {
-	entry: './frontend/index.js',
+	entry: './frontend/index.tsx',
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'assets/app-[fullhash].js',
 		publicPath: '/',
 	},
 	resolve: {
-		extensions: ['.js', '.jsx'],
+		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
 		alias: {
 			'@components': path.resolve(__dirname, 'frontend/components/'),
 			'@styles': path.resolve(__dirname, 'frontend/styles/'),
@@ -27,7 +27,7 @@ module.exports = {
 	module: {
 		rules: [
 			{
-				test: /\.(js|jsx|tsx)$/,
+				test: /\.(js|jsx|ts|tsx)$/,
 				exclude: /node_modules/,
 				use: {
 					loader: 'babel-loader',

@@ -14,10 +14,10 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 //Router
 import { StaticRouter } from 'react-router-dom/server';
+import routes from '../routes';
 //Redux
-import { createStore } from 'redux'; //, applyMiddleware
 import { Provider } from 'react-redux';
-import reducer from '../frontend/reducers';
+import setStore from '../frontend/setStore.js';
 import initialState from '../frontend/reducers/initialState';
 //Get Hashes
 import getHashManifest from './getHashManifest';
@@ -25,6 +25,8 @@ import getHashManifest from './getHashManifest';
 import App from '../frontend/components/App';
 
 const { env, port } = config;
+
+const routesUrls = routes.map( route => route.path)
 
 const app = express();
 
@@ -88,20 +90,25 @@ const setResponse = (html, preloadedState, manifest) => {
     `);
 };
 
-const renderApp = (req, res) => {
-	const store = createStore(reducer, initialState);
-	const preloadedState = store.getState();
-	const html = renderToString(
-		<Provider store={store}>
-			<StaticRouter location={req.url}>
-				<App />
-			</StaticRouter>
-		</Provider>
-	);
-	res.send(setResponse(html, preloadedState, req.hashManifest));
+const renderApp = (req, res, next) => {
+	if(routesUrls.includes(req.url)){
+		const store = setStore({ initialState });
+		const preloadedState = store.getState();
+		const html = renderToString(
+			<Provider store={store}>
+				<StaticRouter location={req.url}>
+					<App />
+				</StaticRouter>
+			</Provider>
+		);
+		res.send(setResponse(html, preloadedState, req.hashManifest))
+	}
+	next()
 };
 
-app.get('*', renderApp);
+app
+	.get('*', renderApp);
+
 
 app.listen(port, (err) => {
 	if(err) console.error(err);

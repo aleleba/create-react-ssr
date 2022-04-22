@@ -2,10 +2,14 @@ require('dotenv').config();
 
 require('ignore-styles');
 
+//require('webpack-node-externals')();
+
 require('@babel/register')({
 	'presets': [
 		'@babel/preset-env',
-		'@babel/preset-react'
+		'@babel/preset-react',
+		"@babel/preset-typescript",
+		// '@babel/preset-flow',
 	]
 });
 
