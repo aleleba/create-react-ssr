@@ -2,10 +2,10 @@
   "name": "create-react-ssr",
   "version": "1.0.0",
   "description": "Starter Kit de server side render de react",
-  "main": "index.js",
+  "main": "src/server/index",
   "scripts": {
-    "start": "ts-node server",
-    "start:dev": "nodemon --exec 'ts-node' server/index -e js,json,ts,tsx,jsx",
+    "start": "ts-node src/server",
+    "start:dev": "nodemon --exec 'ts-node' src/server/index -e js,json,ts,tsx,jsx",
     "build": "webpack-cli --config webpack.config.js",
     "lint": "eslint ./ --ext .js --ext .ts --ext .jsx --ext .tsx",
     "lint:fix": "eslint ./ --ext .js --ext .ts --ext .jsx --ext .tsx --fix",

@@ -1,11 +1,11 @@
 //Dependencies of Server
 import express from 'express';
-import { config } from '../config';
+import { config } from '../../config';
 import webpack from 'webpack';
 import helmet from 'helmet';
 
 //Dependencies of HotReloading
-import webpackConfig from '../webpack.config.dev';
+import webpackConfig from '../../webpack.config.dev';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
@@ -44,12 +44,14 @@ if(env === 'development'){
 			heartbeat: 1000,
 		}));
 }else{
+	const baseUrl = __dirname.replace(/\/client(.*)/,'');
+	const fullURL = `${baseUrl}/client/build` ;
 	app
 		.use((req, res, next) => {
 			if(!req.hashManifest) req.hashManifest = getHashManifest();
 			next();
 		})
-		.use(express.static(`${__dirname}/../build`))
+		.use(express.static(fullURL))
 		.use(helmet())
 		.use(helmet.permittedCrossDomainPolicies())
 		.use(helmet({

@@ -7,7 +7,7 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const PUBLIC_URL = process.env.PUBLIC_URL || '/';
 
 module.exports = {
-	entry: ['webpack-hot-middleware/client?path=/reload_wss&timeout=2000&reload=true&autoConnect=true', './frontend/index.tsx'],
+	entry: ['webpack-hot-middleware/client?path=/reload_wss&timeout=2000&reload=true&autoConnect=true', './src/frontend/index.tsx'],
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'assets/app.js',
@@ -16,8 +16,8 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
 		alias: {
-			'@components': path.resolve(__dirname, 'frontend/components/'),
-			'@styles': path.resolve(__dirname, 'frontend/styles/'),
+			'@components': path.resolve(__dirname, 'src/frontend/components/'),
+			'@styles': path.resolve(__dirname, 'src/frontend/styles/'),
 		}
 	},
 	devtool: 'inline-source-map',

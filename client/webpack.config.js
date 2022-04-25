@@ -13,7 +13,7 @@ const { InjectManifest } = require('workbox-webpack-plugin');
 const PUBLIC_URL = process.env.PUBLIC_URL || '/';
 
 module.exports = {
-	entry: './frontend/index.tsx',
+	entry: './src/frontend/index.tsx',
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'assets/app-[fullhash].js',
@@ -22,8 +22,8 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
 		alias: {
-			'@components': path.resolve(__dirname, 'frontend/components/'),
-			'@styles': path.resolve(__dirname, 'frontend/styles/'),
+			'@components': path.resolve(__dirname, 'src/frontend/components/'),
+			'@styles': path.resolve(__dirname, 'src/frontend/styles/'),
 		}
 	},
 	mode: 'production',

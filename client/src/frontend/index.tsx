@@ -6,11 +6,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { IInitialState } from './reducers/index.js';
 import setStore from './setStore.js';
-import { config } from '../config';
+import { config } from '../../config';
 
 import './styles/global.sass';
 import App from './components/App';
-import serviceWorkerRegistration from '../serviceWorkerRegistration';
+import serviceWorkerRegistration from '../../serviceWorkerRegistration';
 
 declare global {
 	interface Window {
