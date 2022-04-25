@@ -66,9 +66,10 @@ if(env === 'development'){
 }
 
 const setResponse = (html, preloadedState, manifest) => {
-	const mainStyles = manifest ? manifest['main.css'] : 'assets/app.css';
-	const mainBuild = manifest ? manifest['main.js'] : 'assets/app.js';
+	const mainStyles = manifest ? manifest['frontend.css'] : 'assets/app.css';
+	const mainBuild = manifest ? manifest['frontend.js'] : 'assets/app.js';
 	const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
+	const manifestJson = manifest ? `<link rel="manifest" href="${manifest['manifest.json']}">` : '';
 
 	return(`
     <!DOCTYPE html>
@@ -79,7 +80,7 @@ const setResponse = (html, preloadedState, manifest) => {
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
 			<meta name="theme-color" content="#000000">
-			<link rel="manifest" href="manifest.json">
+			${manifestJson}
             <link href="${mainStyles}" rel="stylesheet" type="text/css"></link>
             <title>App</title>
         </head>

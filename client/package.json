@@ -4,7 +4,7 @@
   "description": "Starter Kit de server side render de react",
   "main": "src/server/index",
   "scripts": {
-    "start": "ts-node src/server",
+    "start": "node build/server/app-server.js",
     "start:dev": "nodemon --exec 'ts-node' src/server/index -e js,json,ts,tsx,jsx",
     "build": "webpack-cli --config webpack.config.js",
     "lint": "eslint ./ --ext .js --ext .ts --ext .jsx --ext .tsx",
@@ -89,6 +89,7 @@
     "webpack-dev-middleware": "^5.3.1",
     "webpack-dev-server": "^4.8.1",
     "webpack-hot-middleware": "^2.25.1",
+    "webpack-node-externals": "^3.0.0",
     "workbox-webpack-plugin": "^6.5.3",
     "workbox-window": "^6.5.3"
   }

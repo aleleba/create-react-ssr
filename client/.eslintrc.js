@@ -41,7 +41,8 @@ module.exports = {
 		'eol-last': [
 			'error',
 			'always'
-		]
+		],
+		'@typescript-eslint/no-var-requires': 0,
 	},
 	'settings': {
 		'react': {
