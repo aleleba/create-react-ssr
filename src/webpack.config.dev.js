@@ -4,13 +4,14 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const PUBLIC_URL = process.env.PUBLIC_URL || '/';
 
 module.exports = {
 	entry: ['webpack-hot-middleware/client?path=/reload_wss&timeout=2000&reload=true&autoConnect=true', './frontend/index.tsx'],
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'assets/app.js',
-		publicPath: '/',
+		publicPath: PUBLIC_URL,
 	},
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
@@ -51,6 +52,7 @@ module.exports = {
 		new ESLintPlugin(),
 		new webpack.DefinePlugin({
 			'process.env': JSON.stringify(dotenv.parsed),
+			'process.env.PUBLIC_URL': JSON.stringify(PUBLIC_URL),
 		}),
 	],
 	optimization: {

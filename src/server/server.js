@@ -26,7 +26,7 @@ import App from '../frontend/components/App';
 
 const { env, port } = config;
 
-const routesUrls = routes.map( route => route.path)
+const routesUrls = routes.map( route => route.path);
 
 const app = express();
 
@@ -73,8 +73,11 @@ const setResponse = (html, preloadedState, manifest) => {
     <html lang="es">
         <head>
             <meta charset="UTF-8">
+			<!-- <link rel="shortcut icon" href="favicon.ico"> -->
             <meta http-equiv="X-UA-Compatible" content="IE=edge">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<meta name="theme-color" content="#000000">
+			<link rel="manifest" href="manifest.json">
             <link href="${mainStyles}" rel="stylesheet" type="text/css"></link>
             <title>App</title>
         </head>
@@ -101,9 +104,9 @@ const renderApp = (req, res, next) => {
 				</StaticRouter>
 			</Provider>
 		);
-		res.send(setResponse(html, preloadedState, req.hashManifest))
+		res.send(setResponse(html, preloadedState, req.hashManifest));
 	}
-	next()
+	next();
 };
 
 app

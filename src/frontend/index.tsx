@@ -6,9 +6,11 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { IInitialState } from './reducers/index.js';
 import setStore from './setStore.js';
+import { config } from '../config';
 
-import App from './components/App';
 import './styles/global.sass';
+import App from './components/App';
+import serviceWorkerRegistration from '../serviceWorkerRegistration';
 
 declare global {
 	interface Window {
@@ -25,6 +27,8 @@ declare global {
 interface IHot {
 	accept: any
 }
+
+const { env } = config;
 
 const preloadedState = window.__PRELOADED_STATE__;
 const store = setStore({ initialState: preloadedState });
@@ -57,6 +61,15 @@ hydrateRoot(container,
     </Provider>
 ); */
 
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+//serviceWorker.register();
+
+if((env) && (env === 'production')){
+	serviceWorkerRegistration();
+}
+
 if(module.hot){
 	module.hot.accept();
-};
+}

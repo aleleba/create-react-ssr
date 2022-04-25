@@ -10,5 +10,5 @@ const PRName = function () {
 
 console.log(PRName());
 
-export default PRName
+export default PRName;
   
