@@ -47,6 +47,21 @@ const frontendConfig = {
 					'sass-loader',
 				], 
 			},
+			{
+				test: /\.(png|jpg|jpeg|gif|svg|ico|mp4|avi|ttf|otf|eot|woff|woff2|pdf)$/,
+				loader: 'file-loader',
+				options: {
+					name: 'assets/media/[name].[ext]',
+				},
+			},
+			{
+				test: /\.(ttf|otf|eot|woff|woff2)$/,
+				loader: 'url-loader',
+				options: {
+					name: 'assets/fonts/[name].[ext]',
+					esModule: false,
+				},
+			},
 		],
 	},
 	plugins: [
@@ -75,7 +90,16 @@ const frontendConfig = {
 			patterns: [
 				{
 					from: './public/manifest.json', to: '',
-				}
+				},
+				{
+					from: './public/favicon.ico', to: '',
+				},
+				{
+					from: './public/logo192.png', to: '',
+				},
+				{
+					from: './public/logo512.png', to: '',
+				},
 			]
 		}),
 		new InjectManifest({
@@ -145,6 +169,21 @@ const serverConfig = {
 					'sass-loader',
 				], 
 			},
+			{
+				test: /\.(png|jpg|jpeg|gif|svg|ico|mp4|avi|ttf|otf|eot|woff|woff2|pdf)$/,
+				loader: 'file-loader',
+				options: {
+					name: 'assets/media/[name].[ext]',
+				},
+			},
+			{
+				test: /\.(ttf|otf|eot|woff|woff2)$/,
+				loader: 'url-loader',
+				options: {
+					name: 'assets/fonts/[name].[ext]',
+					esModule: false,
+				},
+			},
 		],
 	},
 	plugins: [
@@ -163,13 +202,6 @@ const serverConfig = {
 		new webpack.DefinePlugin({
 			'process.env': JSON.stringify(dotenv.parsed),
 			'process.env.PUBLIC_URL': JSON.stringify(PUBLIC_URL),
-		}),
-		new CopyPlugin({
-			patterns: [
-				{
-					from: './public/manifest.json', to: '',
-				}
-			]
 		}),
 		new InjectManifest({
 			swSrc: './service-worker.js',

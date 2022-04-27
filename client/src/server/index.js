@@ -20,17 +20,26 @@ require('asset-require-hook')({
 		'png',
 		'svg',
 		'gif',
+		'ico',
 		// videos
 		'mp4',
 		'avi',
+		// files
+		'pdf',
+	],
+	name: '/assets/media/[name].[ext]',
+});
+
+require('asset-require-hook')({
+	extensions: [
 		// typography
 		'ttf',
 		'otf',
 		'eot',
-		// files
-		'pdf'
+		'woff',
+		'woff2',
 	],
-	name: '/assets/[hash].[ext]',
+	name: '/assets/fonts/[name].[ext]',
 });
 
 require('./server');

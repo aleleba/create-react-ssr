@@ -4,6 +4,7 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const PUBLIC_URL = process.env.PUBLIC_URL || '/';
 
 module.exports = {
@@ -41,6 +42,21 @@ module.exports = {
 					'sass-loader',
 				], 
 			},
+			{
+				test: /\.(png|jpg|jpeg|gif|svg|ico|mp4|avi|ttf|otf|eot|woff|woff2|pdf)$/,
+				loader: 'file-loader',
+				options: {
+					name: 'assets/media/[name].[ext]',
+				},
+			},
+			{
+				test: /\.(ttf|otf|eot|woff|woff2)$/,
+				loader: 'url-loader',
+				options: {
+					name: 'assets/fonts/[name].[ext]',
+					esModule: false,
+				},
+			},
 		]
 	},
 	plugins: [
@@ -53,6 +69,22 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'process.env': JSON.stringify(dotenv.parsed),
 			'process.env.PUBLIC_URL': JSON.stringify(PUBLIC_URL),
+		}),
+		new CopyPlugin({
+			patterns: [
+				{
+					from: './public/manifest.json', to: '',
+				},
+				{
+					from: './public/favicon.ico', to: '',
+				},
+				{
+					from: './public/logo192.png', to: '',
+				},
+				{
+					from: './public/logo512.png', to: '',
+				},
+			]
 		}),
 	],
 	optimization: {
