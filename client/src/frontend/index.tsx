@@ -4,7 +4,7 @@ import { hydrateRoot } from 'react-dom/client';
 import { BrowserRouter as Router } from 'react-router-dom';
 // Redux
 import { Provider } from 'react-redux';
-import { IInitialState } from './reducers/index.js';
+import { IInitialState } from './reducers/index';
 import setStore from './setStore.js';
 import { config } from '../../config';
 
