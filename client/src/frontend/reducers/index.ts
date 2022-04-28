@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import testReducer, { ITestReducer } from './testReducer';
+import testReducer from './testReducer';
+import { IChangeHelloPayload } from '../actions/testAction';
 
 export interface IInitialState {
-	testReducer?: ITestReducer | undefined
+	testReducer?: IChangeHelloPayload | undefined
 }
 
 const rootReducer = combineReducers({

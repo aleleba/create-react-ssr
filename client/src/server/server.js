@@ -17,7 +17,7 @@ import { StaticRouter } from 'react-router-dom/server';
 import routes from '../routes';
 //Redux
 import { Provider } from 'react-redux';
-import setStore from '../frontend/setStore.js';
+import setStore from '../frontend/setStore';
 import initialState from '../frontend/reducers/initialState';
 //Get Hashes
 import getHashManifest from './getHashManifest';

@@ -1,2 +1,2 @@
-let initialState = {};
+const initialState = {};
 export default  initialState;
