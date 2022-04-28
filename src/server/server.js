@@ -44,8 +44,8 @@ if(env === 'development'){
 			heartbeat: 1000,
 		}));
 }else{
-	const baseUrl = __dirname.replace(/\/client(.*)/,'');
-	const fullURL = `${baseUrl}/client/build` ;
+	const baseUrl = __dirname.replace(/\/server(.*)/,'');
+	const fullURL = `${baseUrl}` ;
 	app
 		.use((req, res, next) => {
 			if(!req.hashManifest) req.hashManifest = getHashManifest();

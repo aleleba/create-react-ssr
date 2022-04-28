@@ -1,9 +1,6 @@
 #node_modules ignore
-client/node_modules
-server/node_modules
+node_modules
 #.envs
-client/.env
-server/.env
+.env
 #builds
-client/build
-server/build
+build
