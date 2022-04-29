@@ -1,0 +1,46 @@
+{
+  "extends": "ts-node/node12/tsconfig.json",
+  "ts-node": {
+    // It is faster to skip typechecking.
+    // Remove if you want ts-node to do typechecking.
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "commonjs",
+    }
+  },
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "types": [
+      "react/next", 
+      "react-dom/next", 
+      "node"
+    ],
+    "sourceMap": true,
+    "baseUrl": "**/*",
+  },
+  "include": [
+    "**/*"
+  ],
+  "exclude": [
+   "node_modules" 
+  ]
+}
