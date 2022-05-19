@@ -6,11 +6,11 @@ It is not a project like create-react-app, create-react-app is used as a starter
 
 Tech(Library or Framework) | Version |
 --- | --- |
-React (Render Library) | 18.0.0
-Redux (Global State Management) | 4.1.2
+React (Render Library) | 18.1.0
+Redux (Global State Management) | 4.2.0
 React Router DOM (Routing) | 6.3.0
-Jest (Testing) | 28.0.2
-Typescript | 5.6.3
+Jest (Testing) | 28.1.0
+Typescript | 4.6.4
 
 ## Setup
 To create a new project run in the terminal:
