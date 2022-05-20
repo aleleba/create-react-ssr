@@ -5,12 +5,15 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const ROOT_DIR = path.resolve(__dirname);
+const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
+const BUILD_DIR = resolvePath('build');
 const PUBLIC_URL = process.env.PUBLIC_URL || '/';
 
 module.exports = {
-	entry: ['webpack-hot-middleware/client?path=/reload_wss&timeout=2000&reload=true&autoConnect=true', './src/frontend/index.tsx'],
+	entry: ['webpack-hot-middleware/client?path=/reload_wss&timeout=2000&reload=true&autoConnect=true', `${ROOT_DIR}/../src/frontend/index.tsx`],
 	output: {
-		path: path.resolve(__dirname, 'build'),
+		path: BUILD_DIR,
 		filename: 'assets/app.js',
 		publicPath: PUBLIC_URL,
 	},
@@ -73,16 +76,16 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{
-					from: './public/manifest.json', to: '',
+					from: `${ROOT_DIR}/../public/manifest.json`, to: '',
 				},
 				{
-					from: './public/favicon.ico', to: '',
+					from: `${ROOT_DIR}/../public/favicon.ico`, to: '',
 				},
 				{
-					from: './public/logo192.png', to: '',
+					from: `${ROOT_DIR}/../public/logo192.png`, to: '',
 				},
 				{
-					from: './public/logo512.png', to: '',
+					from: `${ROOT_DIR}/../public/logo512.png`, to: '',
 				},
 			]
 		}),
