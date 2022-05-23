@@ -3,4 +3,4 @@ const config = {
 	port: process.env.PORT ? process.env.PORT : 80,
 };
 
-module.exports = { config: config };
+export default config;

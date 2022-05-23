@@ -5,17 +5,17 @@ import App from '../App';
 
 describe('<App/> Component', () => {
     beforeEach(() => {
-        fetch.resetMocks();
+        fetchMock.resetMocks();
     });
 
     test('Should render root <App /> Component', async () => {
-        fetch.mockResponseOnce(JSON.stringify({
+        fetchMock.mockResponseOnce(JSON.stringify({
             //First Data Fetch
             data: 'data'
         }));
 
         render(
-            <ProviderMock>
+            <ProviderMock initialState={undefined}>
                 <App />
             </ProviderMock>
         )

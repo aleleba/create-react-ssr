@@ -2,7 +2,7 @@
 import { createStore } from 'redux'; //, applyMiddleware
 // import { Provider } from 'react-redux';
 import { composeWithDevTools as composeWithDevToolsWeb } from 'redux-devtools-extension';
-import { config } from '../../config';
+import config from '../../config';
 import reducer, { IInitialState } from './reducers';
 
 

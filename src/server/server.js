@@ -1,6 +1,6 @@
 //Dependencies of Server
 import express from 'express';
-import { config } from '../../config';
+import config from '../../config';
 import webpack from 'webpack';
 import helmet from 'helmet';
 

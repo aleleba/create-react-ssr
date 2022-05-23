@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { IInitialState } from './reducers/index';
 import setStore from './setStore';
-import { config } from '../../config';
+import config from '../../config';
 
 import './styles/global.sass';
 import App from './components/App';
