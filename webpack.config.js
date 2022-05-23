@@ -9,16 +9,19 @@ const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
+const ROOT_DIR = path.resolve(__dirname);
+const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
+const BUILD_DIR = resolvePath('build');
 const { InjectManifest } = require('workbox-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const PUBLIC_URL = process.env.PUBLIC_URL || '/';
 
 const frontendConfig = {
 	entry: {
-		frontend: './src/frontend/index.tsx',
+		frontend: `${ROOT_DIR}/src/frontend/index.tsx`,
 	},
 	output: {
-		path: path.resolve(__dirname, 'build'),
+		path: BUILD_DIR,
 		filename: 'assets/app-[name]-[fullhash].js',
 		publicPath: PUBLIC_URL,
 	},
@@ -89,16 +92,16 @@ const frontendConfig = {
 		new CopyPlugin({
 			patterns: [
 				{
-					from: './public/manifest.json', to: '',
+					from: `${ROOT_DIR}/public/manifest.json`, to: '',
 				},
 				{
-					from: './public/favicon.ico', to: '',
+					from: `${ROOT_DIR}/public/favicon.ico`, to: '',
 				},
 				{
-					from: './public/logo192.png', to: '',
+					from: `${ROOT_DIR}/public/logo192.png`, to: '',
 				},
 				{
-					from: './public/logo512.png', to: '',
+					from: `${ROOT_DIR}/public/logo512.png`, to: '',
 				},
 			]
 		}),
@@ -135,7 +138,7 @@ const frontendConfig = {
 
 const serverConfig = {
 	entry: {
-		server: './src/server/index.js',
+		server: './src/server/index.ts',
 	},
 	target: "node",
 	externals: [nodeExternals()],
@@ -234,4 +237,4 @@ const serverConfig = {
 	},
 };
   
-  module.exports = [frontendConfig, serverConfig];
+module.exports = [frontendConfig, serverConfig];

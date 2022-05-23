@@ -14,7 +14,7 @@ module.exports = {
   mode: 'development',
   name: 'server',
   entry: {
-    server: `${ROOT_DIR}/src/server/index.js`,
+    server: `${ROOT_DIR}/src/server/index.ts`,
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
