@@ -1,13 +1,4 @@
 {
-  "extends": "ts-node/node12/tsconfig.json",
-  "ts-node": {
-    // It is faster to skip typechecking.
-    // Remove if you want ts-node to do typechecking.
-    "transpileOnly": true,
-    "compilerOptions": {
-      "module": "commonjs",
-    }
-  },
   "compilerOptions": {
     "target": "es5",
     "lib": [
@@ -17,7 +8,6 @@
     ],
     "allowJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -29,6 +19,7 @@
     "noEmit": false,
     "jsx": "react-jsx",
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "types": [
       "react/next", 
       "react-dom/next", 
@@ -36,11 +27,14 @@
     ],
     "sourceMap": true,
     "baseUrl": "**/*",
+    "outDir": "build"
   },
   "include": [
     "**/*"
   ],
   "exclude": [
-   "node_modules" 
+   "node_modules",
+   "build",
+   "PRNameGenerator.ts"
   ]
 }
