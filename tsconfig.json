@@ -7,7 +7,6 @@
       "esnext"
     ],
     "allowJs": true,
-    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -27,7 +26,9 @@
     ],
     "sourceMap": true,
     "baseUrl": "**/*",
-    "outDir": "build"
+    "outDir": "build",
+    "skipLibCheck": true,
+    "noImplicitAny": false
   },
   "include": [
     "**/*"

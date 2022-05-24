@@ -1,15 +1,16 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const webpackNodeExternals = require('webpack-node-externals');
-const path = require('path');
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import webpackNodeExternals from 'webpack-node-externals';
+import path from 'path';
+import { Configuration } from 'webpack';
 const ROOT_DIR = path.resolve(__dirname);
-const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
+const resolvePath = (...args: string[]) => path.resolve(ROOT_DIR, ...args);
 const BUILD_DIR = resolvePath('build');
 const scriptExtensions = /\.(tsx|ts|js|jsx|mjs)$/;
 const styleExtensions = /\.(css|less|styl|scss|sass|sss)$/;
 const fontsExtensions = /\.(eot|otf|ttf|woff|woff2)$/;
 const fontsAndImagesExtensions = /\.(png|jpg|jpeg|gif|svg|ico|mp4|avi|ttf|otf|eot|woff|woff2|pdf)$/;
 
-module.exports = {
+const config: Configuration = {
   target: 'node',
   mode: 'development',
   name: 'server',
@@ -83,3 +84,5 @@ module.exports = {
     }),
   ],
 };
+
+export default config

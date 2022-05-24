@@ -1,16 +1,19 @@
-const path = require('path');
-const dotenv = require('dotenv').config();
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+import path from 'path';
+import * as dotenv from 'dotenv';
+import webpack, {Configuration} from 'webpack';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+
+const dotEnvToParse = dotenv.config();
+
 const ROOT_DIR = path.resolve(__dirname);
-const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
+const resolvePath = (...args: string[]) => path.resolve(ROOT_DIR, ...args);
 const BUILD_DIR = resolvePath('build');
 const PUBLIC_URL = process.env.PUBLIC_URL || '/';
 
-module.exports = {
+const config: Configuration = {
 	entry: ['webpack-hot-middleware/client?path=/reload_wss&timeout=2000&reload=true&autoConnect=true', `${ROOT_DIR}/../src/frontend/index.tsx`],
 	output: {
 		path: BUILD_DIR,
@@ -70,7 +73,7 @@ module.exports = {
 		}),
 		new ESLintPlugin(),
 		new webpack.DefinePlugin({
-			'process.env': JSON.stringify(dotenv.parsed),
+			'process.env': JSON.stringify(dotEnvToParse.parsed),
 			'process.env.PUBLIC_URL': JSON.stringify(PUBLIC_URL),
 		}),
 		new CopyPlugin({
@@ -101,7 +104,7 @@ module.exports = {
 					priority: 1,
 					filename: 'assets/vendor.js',
 					enforce: true,
-					test (module, chunks){
+					test (module: { nameForCondition: () => any; }, chunks: { name: string; }){
 						const name = module.nameForCondition && module.nameForCondition();
 						return chunks.name !== 'vendors' && /[\\/]node_modules[\\/]/.test(name);  
 					},
@@ -110,3 +113,5 @@ module.exports = {
 		},
 	},
 };
+
+export default config

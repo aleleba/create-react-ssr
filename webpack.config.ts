@@ -1,14 +1,17 @@
-const path = require('path');
-const dotenv = require('dotenv').config();
-const webpack = require('webpack');
-const CompressionWebpackPlugin = require('compression-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const TerserPlugin = require('terser-webpack-plugin');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+import path  from 'path';
+import * as dotenv from 'dotenv';
+import webpack from 'webpack';
+import CompressionWebpackPlugin from 'compression-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import ESLintPlugin from 'eslint-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+
+const dotEnvToParse = dotenv.config();
+
 const ROOT_DIR = path.resolve(__dirname);
 const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
 const BUILD_DIR = resolvePath('build');
@@ -86,7 +89,7 @@ const frontendConfig = {
 		}),
 		new ESLintPlugin(),
 		new webpack.DefinePlugin({
-			'process.env': JSON.stringify(dotenv.parsed),
+			'process.env': JSON.stringify(dotEnvToParse.parsed),
 			'process.env.PUBLIC_URL': JSON.stringify(PUBLIC_URL),
 		}),
 		new CopyPlugin({
@@ -203,7 +206,7 @@ const serverConfig = {
 		new CleanWebpackPlugin(),
 		new ESLintPlugin(),
 		new webpack.DefinePlugin({
-			'process.env': JSON.stringify(dotenv.parsed),
+			'process.env': JSON.stringify(dotEnvToParse.parsed),
 			'process.env.PUBLIC_URL': JSON.stringify(PUBLIC_URL),
 		}),
 		new InjectManifest({
@@ -237,4 +240,4 @@ const serverConfig = {
 	},
 };
   
-module.exports = [frontendConfig, serverConfig];
+export default [frontendConfig, serverConfig];
