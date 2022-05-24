@@ -19,6 +19,7 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "isolatedModules": false,
+    "typeRoots" : ["./src/@types", "./node_modules/@types"],
     "types": [
       "react/next", 
       "react-dom/next", 

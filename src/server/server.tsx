@@ -31,10 +31,11 @@ const routesUrls = routes.map( route => route.path);
 const app = express();
 
 if(env === 'development'){
+	// @ts-ignore:next-line
 	const compiler = webpack(webpackConfig);
 	const serverConfig = { 
 		serverSideRender: true,
-		publicPath: webpackConfig.output.publicPath,
+		publicPath: webpackConfig.output?.publicPath,
 	};
 
 	app
@@ -101,6 +102,7 @@ const renderApp = (req, res, next) => {
 		const store = setStore({ initialState });
 		const preloadedState = store.getState();
 		const html = renderToString(
+			// @ts-ignore:next-line
 			<Provider store={store}>
 				<StaticRouter location={req.url}>
 					<App />
@@ -116,7 +118,6 @@ app
 	.get('*', renderApp);
 
 
-app.listen(port, (err) => {
-	if(err) console.error(err);
-	else console.log(`Server running on port ${port}`);
+app.listen(port, () => {
+	console.log(`Server running on port ${port}`);
 });
