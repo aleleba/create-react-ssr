@@ -109,7 +109,7 @@ const frontendConfig = {
 			]
 		}),
 		new InjectManifest({
-			swSrc: './service-worker.js',
+			swSrc: './service-worker.ts',
 			swDest: 'service-worker.js',
 		}),
 	],
@@ -210,7 +210,7 @@ const serverConfig = {
 			'process.env.PUBLIC_URL': JSON.stringify(PUBLIC_URL),
 		}),
 		new InjectManifest({
-			swSrc: './service-worker.js',
+			swSrc: './service-worker.ts',
 			swDest: 'service-worker.js',
 		}),
 	],
