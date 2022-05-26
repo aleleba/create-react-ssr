@@ -10,7 +10,7 @@ React (Render Library) | 18.1.0
 Redux (Global State Management) | 4.2.0
 React Router DOM (Routing) | 6.3.0
 Jest (Testing) | 28.1.0
-Typescript | 4.6.4
+Typescript | 4.7.2
 
 ## Setup
 To create a new project run in the terminal:
@@ -31,7 +31,7 @@ PORT=3000 #Default 80
 #PUBLIC URL
 #PUBLIC_URL= #Default /
 ```
-The default environment is production, the app port defauld is 80 and the defauld public url is "/".
+The default environment is production, the app port defauld is 80 and the default public url is "/".
 
 ### For Development
 In the terminal run:

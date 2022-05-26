@@ -1,10 +1,9 @@
 #Build
 build
 #Webpack
-webpack.config.js
-webpack.config.dev.js
-#Server
-/server/index.js
+webpack.config.ts
+webpack.config.dev.ts
+webpack.config.dev.server.ts
 #Service Worker
-service-worker.js
+service-worker.ts
 serviceWorkerRegistration.ts
