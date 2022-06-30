@@ -9,7 +9,7 @@ Tech(Library or Framework) | Version |
 React (Render Library) | 18.2.0
 Redux (Global State Management) | 4.2.0
 React Router DOM (Routing) | 6.3.0
-Jest (Testing) | 28.1.1
+Jest (Testing) | 28.1.2
 Typescript | 4.7.4
 
 ## Setup
