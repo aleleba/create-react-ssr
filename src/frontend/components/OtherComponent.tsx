@@ -1,6 +1,6 @@
 import React from 'react';
 import logo from '../logo.svg';
-import './InitialComponent.sass';
+import './InitialComponent.scss';
 import { Link } from "react-router-dom";
 
 const OtherComponent = () => (

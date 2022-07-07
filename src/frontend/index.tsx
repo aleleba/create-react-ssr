@@ -8,7 +8,7 @@ import { IInitialState } from './reducers/index';
 import setStore from './setStore';
 import config from '../../config';
 
-import './styles/global.sass';
+import './styles/global.scss';
 import App from './components/App';
 import serviceWorkerRegistration from '../../serviceWorkerRegistration';
 
