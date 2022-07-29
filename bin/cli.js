@@ -15,8 +15,10 @@ const runCommand = command => {
 const repoName = process.argv[2];
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/aleleba/create-react-ssr ${repoName}`;
 const installDepsCommand = `cd ${repoName} && npm install`;
-const deleteFoldersCommand = `cd ${repoName} && rm -rf .github && rm -rf bin && rm -rf .git && git init && git add . && git commit -m "Initial commit"`
-const deleteFoldersCommandWindows = `cd ${repoName} && rd /s /q .github && rd /s /q bin && rd /s /q .git && git init && git add . && git commit -m "Initial commit"`
+const cleanGitHistoryCommand = `cd ${repoName} && rm -rf .git && git init && git add --all -- ':!.github' ':!bin' && git commit -m "Initial commit"`
+const cleanGitHistoryCommandWindows = `cd ${repoName} && rd /s /q .git && git init && git add --all -- ':!.github' ':!bin' && git commit -m "Initial commit"`
+const deleteFoldersCommand = `cd ${repoName} && rm -rf .github && rm -rf bin`
+const deleteFoldersCommandWindows = `cd ${repoName} && rd /s /q .github && rd /s /q bin`
 
 console.log(`Cloning the repository with name ${repoName}`);
 const checkedOut = runCommand(gitCheckoutCommand);
@@ -25,6 +27,10 @@ if(!checkedOut) process.exit(-1);
 console.log(`Installing dependencies for ${repoName}`);
 const installedDeps = runCommand(installDepsCommand);
 if(!installedDeps) process.exit(-1);
+
+console.log(`Installing dependencies for ${repoName}`);
+const cleanGitHistory = isWin ? runCommand(cleanGitHistoryCommandWindows) : runCommand(cleanGitHistoryCommand);
+if(!cleanGitHistory) process.exit(-1);
 
 console.log("Congratulations! You are ready. Follow the following commands to start");
 console.log(`cd ${repoName}`);
