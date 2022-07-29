@@ -26,10 +26,10 @@ console.log(`Installing dependencies for ${repoName}`);
 const installedDeps = runCommand(installDepsCommand);
 if(!installedDeps) process.exit(-1);
 
+const deleteFolders = isWin ? runCommand(deleteFoldersCommandWindows) : runCommand(deleteFoldersCommand);
+if(!deleteFolders) process.exit(-1);
+
 console.log("Congratulations! You are ready. Follow the following commands to start");
 console.log(`cd ${repoName}`);
 console.log('Create a .env file with ENV=development(defauld: production), PORT=3000 (default: 80), PUBLIC_URL=your_public_url(optional)(default: /)');
 console.log(`Then you can run: npm start:dev`);
-
-const deleteFolders = isWin ? runCommand(deleteFoldersCommandWindows) : runCommand(deleteFoldersCommand);
-if(!deleteFolders) process.exit(-1);
