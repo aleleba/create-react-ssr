@@ -18,7 +18,7 @@ const installDepsCommand = `cd ${repoName} && npm install`;
 const cleanGitHistoryCommand = `cd ${repoName} && rm -rf .git && git init && git add --all -- ':!.github' ':!bin' && git commit -m "Initial commit"`
 const cleanGitHistoryCommandWindows = `cd ${repoName} && rm -r -Force .git && git init && git add --all -- ':!.github' ':!bin' && git commit -m "Initial commit"`
 const deleteFoldersCommand = `cd ${repoName} && rm -rf .github && rm -rf bin`
-const deleteFoldersCommandWindows = `cd ${repoName}; rm -r -Force .github && rm -r -Force bin`
+const deleteFoldersCommandWindows = `cd ${repoName} && rm -r -Force .github && rm -r -Force bin`
 
 console.log(`Cloning the repository with name ${repoName}`);
 const checkedOut = runCommand(gitCheckoutCommand);
