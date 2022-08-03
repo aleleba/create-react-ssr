@@ -19,6 +19,7 @@ const cleanGitHistoryCommand = `cd ${repoName} && rm -rf .git && git init && git
 const cleanGitHistoryCommandWindows = `cd ${repoName} && rmdir .git /s /q && git init && git add --all -- ":!.github" ":!bin" && git commit -m "Initial commit"`
 const deleteFoldersCommand = `cd ${repoName} && rm -rf .github && rm -rf bin`
 const deleteFoldersCommandWindows = `cd ${repoName} && rmdir .github /s /q && rmdir bin /s /q`
+const deleteBinCommand = `cd ${repoName} && sed -i 's+"bin": "./bin/cli.js",++g`
 
 console.log(`Cloning the repository with name ${repoName}`);
 const checkedOut = runCommand(gitCheckoutCommand);
@@ -39,3 +40,6 @@ console.log(`Then you can run: npm start:dev`);
 
 const deleteFolders = isWin ? runCommand(deleteFoldersCommandWindows) : runCommand(deleteFoldersCommand);
 if(!deleteFolders) process.exit(-1);
+
+const deleteBin = runCommand(deleteBinCommand);
+if(!deleteBin) process.exit(-1);
