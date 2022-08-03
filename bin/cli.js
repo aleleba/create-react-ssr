@@ -20,6 +20,7 @@ const cleanGitHistoryCommandWindows = `cd ${repoName} && rmdir .git /s /q && git
 const deleteFoldersCommand = `cd ${repoName} && rm -rf .github && rm -rf bin`
 const deleteFoldersCommandWindows = `cd ${repoName} && rmdir .github /s /q && rmdir bin /s /q`
 const deleteBinCommand = `cd ${repoName} && sed -i 's+"bin": "./bin/cli.js",++g' package.json && sed -i '/^[[:space:]]*$/d' package.json`
+const deleteBinCommandWindows = `cd ${repoName} && copy package.json package2.json && del package.json && type package2.json | findstr /v cli.js > package.json && del package2.json`
 
 console.log(`Cloning the repository with name ${repoName}`);
 const checkedOut = runCommand(gitCheckoutCommand);
@@ -29,7 +30,7 @@ console.log(`Installing dependencies for ${repoName}`);
 const installedDeps = runCommand(installDepsCommand);
 if(!installedDeps) process.exit(-1);
 
-const deleteBin = runCommand(deleteBinCommand);
+const deleteBin = isWin ? runCommand(deleteBinCommandWindows) : runCommand(deleteBinCommand);
 if(!deleteBin) process.exit(-1);
 
 console.log(`Cleaning History of Git for ${repoName}`);
