@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 const { execSync } = require('child_process');
 const isWin = process.platform === "win32";
-
+const isAppple = process.platform === "darwin";
+ 
 const runCommand = command => {
     try{
         execSync(`${command}`, {stdio: 'inherit'});
@@ -21,6 +22,8 @@ const deleteFoldersCommand = `cd ${repoName} && rm -rf .github && rm -rf bin`
 const deleteFoldersCommandWindows = `cd ${repoName} && rmdir .github /s /q && rmdir bin /s /q`
 const deleteBinCommand = `cd ${repoName} && sed -i 's+"bin": "./bin/cli.js",++g' package.json && sed -i '/^[[:space:]]*$/d' package.json`
 const deleteBinCommandWindows = `cd ${repoName} && copy package.json package2.json && del package.json && type package2.json | findstr /v cli.js > package.json && del package2.json`
+const deleteBinCommandApple = `cd ${repoName} && sed -i .copy 's+"bin": "./bin/cli.js",++g' package.json && sed -i .copy '/^[[:space:]]*$/d' package.json &&
+rm -rf package.json.copy`
 
 console.log(`Cloning the repository with name ${repoName}`);
 const checkedOut = runCommand(gitCheckoutCommand);
@@ -30,7 +33,7 @@ console.log(`Installing dependencies for ${repoName}`);
 const installedDeps = runCommand(installDepsCommand);
 if(!installedDeps) process.exit(-1);
 
-const deleteBin = isWin ? runCommand(deleteBinCommandWindows) : runCommand(deleteBinCommand);
+const deleteBin = isAppple ? runCommand(deleteBinCommandApple) : (isWin ? runCommand(deleteBinCommandWindows) : runCommand(deleteBinCommand));
 if(!deleteBin) process.exit(-1);
 
 console.log(`Cleaning History of Git for ${repoName}`);
