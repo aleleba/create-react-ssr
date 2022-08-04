@@ -28,7 +28,7 @@ console.log(`Cloning the repository with name ${repoName}`);
 const checkedOut = runCommand(gitCheckoutCommand);
 if(!checkedOut) process.exit(-1);
 
-const actualVersion = runCommandWithOutput(`cd ${repoName} && node -p "require('./package.json').version"`)
+const actualVersion = runCommandWithOutput(`cd ${repoName} && node -p "require('./package.json').version"`).replace(/(\r\n|\n|\r)/gm, "");
 
 const installDepsCommand = `cd ${repoName} && npm install`;
 const cleanGitHistoryCommand = `cd ${repoName} && rm -rf .git && git init && git add --all -- ":!.github" ":!bin" && git commit -m "Initial commit"`
