@@ -13,13 +13,23 @@ const runCommand = command => {
     return true;
 }
 
+const runCommandWithOutput = command => {
+    try{
+        return execSync(`${command}`, {stdio: 'inherit'});
+    } catch (e) {
+        console.error(`Failed to execute ${command}`, e);
+        return false;
+    }
+}
+
 const repoName = process.argv[2];
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/aleleba/create-react-ssr ${repoName}`;
 console.log(`Cloning the repository with name ${repoName}`);
 const checkedOut = runCommand(gitCheckoutCommand);
 if(!checkedOut) process.exit(-1);
 
-const actualVersion = runCommand(`cd ${repoName} && node -p "require('./package.json').version"`)
+const actualVersion = runCommandWithOutput(`cd ${repoName} && node -p "require('./package.json').version"`)
+console.log(actualVersion)
 if(!actualVersion) process.exit(-1);
 
 const installDepsCommand = `cd ${repoName} && npm install`;
