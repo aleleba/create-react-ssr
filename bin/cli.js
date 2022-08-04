@@ -13,11 +13,10 @@ const runCommand = command => {
     return true;
 }
 
-const actualVersion = runCommand(`cd ${repoName} && node -p "require('./package.json').version"`)
-if(!actualVersion) process.exit(-1);
-
 const repoName = process.argv[2];
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/aleleba/create-react-ssr ${repoName}`;
+const actualVersion = runCommand(`cd ${repoName} && node -p "require('./package.json').version"`)
+if(!actualVersion) process.exit(-1);
 const installDepsCommand = `cd ${repoName} && npm install`;
 const cleanGitHistoryCommand = `cd ${repoName} && rm -rf .git && git init && git add --all -- ":!.github" ":!bin" && git commit -m "Initial commit"`
 const cleanGitHistoryCommandWindows = `cd ${repoName} && rmdir .git /s /q && git init && git add --all -- ":!.github" ":!bin" && git commit -m "Initial commit"`
