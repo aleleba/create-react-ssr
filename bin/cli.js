@@ -13,6 +13,9 @@ const runCommand = command => {
     return true;
 }
 
+const actualVersion = runCommand(`cd ${repoName} && node -p "require('./package.json').version"`)
+if(!actualVersion) process.exit(-1);
+
 const repoName = process.argv[2];
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/aleleba/create-react-ssr ${repoName}`;
 const installDepsCommand = `cd ${repoName} && npm install`;
@@ -24,6 +27,8 @@ const deleteBinCommand = `cd ${repoName} && sed -i 's+"bin": "./bin/cli.js",++g'
 const deleteBinCommandWindows = `cd ${repoName} && copy package.json package2.json && del package.json && type package2.json | findstr /v cli.js > package.json && del package2.json`
 const deleteBinCommandApple = `cd ${repoName} && sed -i .copy 's+"bin": "./bin/cli.js",++g' package.json && sed -i .copy '/^[[:space:]]*$/d' package.json &&
 rm -rf package.json.copy`
+const replaceNewVersionCommand = `cd ${repoName} && sed -i 's+"version": "${actualVersion}",+"version": "0.0.1",+g' package.json`
+const replaceNameAppCommand = `cd ${repoName} && sed -i 's+"name": "@aleleba/create-react-ssr",+"name": "${repoName}",+g' package.json`
 
 console.log(`Cloning the repository with name ${repoName}`);
 const checkedOut = runCommand(gitCheckoutCommand);
@@ -35,6 +40,12 @@ if(!installedDeps) process.exit(-1);
 
 const deleteBin = isAppple ? runCommand(deleteBinCommandApple) : (isWin ? runCommand(deleteBinCommandWindows) : runCommand(deleteBinCommand));
 if(!deleteBin) process.exit(-1);
+
+const replaceNewVersion = runCommand(replaceNewVersionCommand)
+if(!replaceNewVersion) process.exit(-1);
+
+const replaceNameApp = runCommand(replaceNameAppCommand)
+if(!replaceNameApp) process.exit(-1);
 
 console.log(`Cleaning History of Git for ${repoName}`);
 const cleanGitHistory = isWin ? runCommand(cleanGitHistoryCommandWindows) : runCommand(cleanGitHistoryCommand);
