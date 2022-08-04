@@ -29,8 +29,6 @@ const checkedOut = runCommand(gitCheckoutCommand);
 if(!checkedOut) process.exit(-1);
 
 const actualVersion = runCommandWithOutput(`cd ${repoName} && node -p "require('./package.json').version"`)
-console.log(actualVersion)
-if(!actualVersion) process.exit(-1);
 
 const installDepsCommand = `cd ${repoName} && npm install`;
 const cleanGitHistoryCommand = `cd ${repoName} && rm -rf .git && git init && git add --all -- ":!.github" ":!bin" && git commit -m "Initial commit"`
