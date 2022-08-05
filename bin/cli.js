@@ -24,13 +24,13 @@ const runCommandWithOutput = command => {
     }
 }
 
-const replaceTextOnFile = ({
+const replaceTextOnFile = async ({
     file,
     textToBeReplaced,
     textReplace,
     arrOfObjectsBeReplaced
 }) => {
-    fs.readFileSync(file, 'utf8', function (err,data) {
+    await fs.readFile(file, 'utf8', function (err,data) {
         let result
         if (err) {
           return console.error(err);
