@@ -28,8 +28,7 @@ console.log(`Cloning the repository with name ${repoName}`);
 const checkedOut = runCommand(gitCheckoutCommand);
 if(!checkedOut) process.exit(-1);
 
-const actualVersion = runCommandWithOutput(`cd ${repoName} && node -p "require('./package.json').version"`)
-const actualVersionTrimmed = actualVersion.trim()
+const actualVersion = runCommandWithOutput(`cd ${repoName} && node -p "require('./package.json').version"`).toString().trim()
 
 const installDepsCommand = `cd ${repoName} && npm install`;
 const cleanGitHistoryCommand = `cd ${repoName} && rm -rf .git && git init && git add --all -- ":!.github" ":!bin" && git commit -m "Initial commit"`
@@ -40,7 +39,7 @@ const deleteBinCommand = `cd ${repoName} && sed -i 's+"bin": "./bin/cli.js",++g'
 const deleteBinCommandWindows = `cd ${repoName} && copy package.json package2.json && del package.json && type package2.json | findstr /v cli.js > package.json && del package2.json`
 const deleteBinCommandApple = `cd ${repoName} && sed -i .copy 's+"bin": "./bin/cli.js",++g' package.json && sed -i .copy '/^[[:space:]]*$/d' package.json &&
 rm -rf package.json.copy`
-const replaceNewVersionCommand = `cd ${repoName} && sed -i 's+"version": "${actualVersionTrimmed}",+"version": "0.0.1",+g' package.json`
+const replaceNewVersionCommand = `cd ${repoName} && sed -i 's+"version": "${actualVersion}",+"version": "0.0.1",+g' package.json`
 const replaceNameAppCommand = `cd ${repoName} && sed -i 's+"name": "@aleleba/create-react-ssr",+"name": "${repoName}",+g' package.json`
 
 console.log(`Installing dependencies for ${repoName}`);
