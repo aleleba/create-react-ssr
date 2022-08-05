@@ -84,23 +84,27 @@ console.log(`Installing dependencies for ${repoName}`);
 const installedDeps = runCommand(installDepsCommand);
 if(!installedDeps) process.exit(-1);
 
-replaceTextOnFile({ 
-    file: `./${repoName}/package.json`,
-    arrOfObjectsBeReplaced: [
-        {
-            textToBeReplaced: `"bin": "./bin/cli.js",`, 
-            textReplace: ``
-        },
-        {
-            textToBeReplaced: `"version": "${actualVersion}",`, 
-            textReplace: `"version": "0.0.1",`
-        },
-        {
-            textToBeReplaced: `"name": "@aleleba/create-react-ssr",`, 
-            textReplace: `"name": "${repoName}",`
-        }
-    ]
-})
+const replaceTextJson = async () => {
+    await replaceTextOnFile({ 
+        file: `./${repoName}/package.json`,
+        arrOfObjectsBeReplaced: [
+            {
+                textToBeReplaced: `"bin": "./bin/cli.js",`, 
+                textReplace: ``
+            },
+            {
+                textToBeReplaced: `"version": "${actualVersion}",`, 
+                textReplace: `"version": "0.0.1",`
+            },
+            {
+                textToBeReplaced: `"name": "@aleleba/create-react-ssr",`, 
+                textReplace: `"name": "${repoName}",`
+            }
+        ]
+    })
+}
+
+replaceTextJson()
 
 /* const deleteBin = isAppple ? runCommand(deleteBinCommandApple) : (isWin ? runCommand(deleteBinCommandWindows) : runCommand(deleteBinCommand));
 if(!deleteBin) process.exit(-1);
