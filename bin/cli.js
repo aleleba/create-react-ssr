@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const { execSync } = require('child_process');
-var fs = require('fs')
+var fs = require('fs');
 
 const isWin = process.platform === "win32";
 const isAppple = process.platform === "darwin";
@@ -24,18 +24,32 @@ const runCommandWithOutput = command => {
     }
 }
 
-const replaceTextOnFile = ({ file, textToBeReplaced, textReplace }) => {
+const replaceTextOnFile = ({
+    file,
+    textToBeReplaced,
+    textReplace,
+    arrOfObjectsBeReplaced
+}) => {
     fs.readFile(file, 'utf8', function (err,data) {
+        let result
         if (err) {
-          console.log(err);
-          return false
+          return console.error(err);
         }
-        var result = data.replace(textToBeReplaced, textReplace);
+        if(arrOfObjectsBeReplaced){
+            arrOfObjectsBeReplaced.forEach( obj => {
+                if(result){
+                    result = result.replace(obj.textToBeReplaced, obj.textReplace).replace(/^\s*[\r\n]/gm, ' ');
+                }else{
+                    result = data.replace(obj.textToBeReplaced, obj.textReplace).replace(/^\s*[\r\n]/gm, ' ');
+                }
+            })
+        }else{
+            result = data.replace(textToBeReplaced, textReplace).replace(/^\s*[\r\n]/gm, ' ');
+        }
         
         fs.writeFile(file, result, 'utf8', function (err) {
             if (err){
-                console.log(err);
-                return false
+                return console.error(err);
             }
         });
     });
@@ -70,17 +84,28 @@ console.log(`Installing dependencies for ${repoName}`);
 const installedDeps = runCommand(installDepsCommand);
 if(!installedDeps) process.exit(-1);
 
-const deleteBin = isAppple ? runCommand(deleteBinCommandApple) : (isWin ? runCommand(deleteBinCommandWindows) : runCommand(deleteBinCommand));
+replaceTextOnFile({ 
+    file: '../package.json',
+    arrOfObjectsBeReplaced: [
+        {
+            textToBeReplaced: `"bin": "./bin/cli.js",`, 
+            textReplace: ``
+        },
+        {
+            textToBeReplaced: `"version": "${actualVersion}",`, 
+            textReplace: `"version": "0.0.1",`
+        },
+        {
+            textToBeReplaced: `"name": "@aleleba/create-react-ssr",`, 
+            textReplace: `"name": "${repoName}",`
+        }
+    ]
+})
+
+/* const deleteBin = isAppple ? runCommand(deleteBinCommandApple) : (isWin ? runCommand(deleteBinCommandWindows) : runCommand(deleteBinCommand));
 if(!deleteBin) process.exit(-1);
 
-const replaceNewVersion = replaceTextOnFile({ 
-    file: 'package.json', 
-    textToBeReplaced: `"version": "${actualVersion}",`, 
-    textReplace: `"version": "0.0.1",`
-})
-if(!replaceNewVersion) process.exit(-1);
-
-/* const replaceNewVersion = runCommand(replaceNewVersionCommand)
+const replaceNewVersion = runCommand(replaceNewVersionCommand)
 if(!replaceNewVersion) process.exit(-1);
 
 const replaceNameApp = runCommand(replaceNameAppCommand)
