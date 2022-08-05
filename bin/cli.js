@@ -30,7 +30,7 @@ const replaceTextOnFile = ({
     textReplace,
     arrOfObjectsBeReplaced
 }) => {
-    fs.readFile(file, 'utf8', function (err,data) {
+    fs.readFileSync(file, 'utf8', function (err,data) {
         let result
         if (err) {
           return console.error(err);
@@ -47,7 +47,7 @@ const replaceTextOnFile = ({
             result = data.replace(textToBeReplaced, textReplace).replace(/^\s*[\r\n]/gm, ' ');
         }
         
-        fs.writeFile(file, result, 'utf8', function (err) {
+        fs.writeFileSync(file, result, 'utf8', function (err) {
             if (err){
                 return console.error(err);
             }
@@ -84,27 +84,23 @@ console.log(`Installing dependencies for ${repoName}`);
 const installedDeps = runCommand(installDepsCommand);
 if(!installedDeps) process.exit(-1);
 
-const replaceTextJson = async () => {
-    await replaceTextOnFile({ 
-        file: `./${repoName}/package.json`,
-        arrOfObjectsBeReplaced: [
-            {
-                textToBeReplaced: `"bin": "./bin/cli.js",`, 
-                textReplace: ``
-            },
-            {
-                textToBeReplaced: `"version": "${actualVersion}",`, 
-                textReplace: `"version": "0.0.1",`
-            },
-            {
-                textToBeReplaced: `"name": "@aleleba/create-react-ssr",`, 
-                textReplace: `"name": "${repoName}",`
-            }
-        ]
-    })
-}
-
-replaceTextJson()
+replaceTextOnFile({ 
+    file: `./${repoName}/package.json`,
+    arrOfObjectsBeReplaced: [
+        {
+            textToBeReplaced: `"bin": "./bin/cli.js",`, 
+            textReplace: ``
+        },
+        {
+            textToBeReplaced: `"version": "${actualVersion}",`, 
+            textReplace: `"version": "0.0.1",`
+        },
+        {
+            textToBeReplaced: `"name": "@aleleba/create-react-ssr",`, 
+            textReplace: `"name": "${repoName}",`
+        }
+    ]
+})
 
 /* const deleteBin = isAppple ? runCommand(deleteBinCommandApple) : (isWin ? runCommand(deleteBinCommandWindows) : runCommand(deleteBinCommand));
 if(!deleteBin) process.exit(-1);
