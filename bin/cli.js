@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 const { execSync } = require('child_process');
+var fs = require('fs')
+
 const isWin = process.platform === "win32";
 const isAppple = process.platform === "darwin";
  
@@ -22,6 +24,23 @@ const runCommandWithOutput = command => {
     }
 }
 
+const replaceTextOnFile = ({ file, textToBeReplaced, textReplace }) => {
+    fs.readFile(file, 'utf8', function (err,data) {
+        if (err) {
+          console.log(err);
+          return false
+        }
+        var result = data.replace(textToBeReplaced, textReplace);
+        
+        fs.writeFile(file, result, 'utf8', function (err) {
+            if (err){
+                console.log(err);
+                return false
+            }
+        });
+    });
+}
+
 const repoName = process.argv[2];
 const gitCheckoutCommand = `git clone --depth 1 https://github.com/aleleba/create-react-ssr ${repoName}`;
 console.log(`Cloning the repository with name ${repoName}`);
@@ -40,7 +59,12 @@ const deleteBinCommandWindows = `cd ${repoName} && copy package.json package2.js
 const deleteBinCommandApple = `cd ${repoName} && sed -i .copy 's+"bin": "./bin/cli.js",++g' package.json && sed -i .copy '/^[[:space:]]*$/d' package.json &&
 rm -rf package.json.copy`
 const replaceNewVersionCommand = `cd ${repoName} && sed -i 's+"version": "${actualVersion}",+"version": "0.0.1",+g' package.json`
+const replaceNewVersionCommandWindows = `cd ${repoName} && copy package.json package2.json && del package.json && type package2.json | %"version": "${actualVersion}",="version": "0.0.1"% > package.json && del package2.json`
+const replaceNewVersionCommandApple = `cd ${repoName} && sed -i .copy 's+"version": "${actualVersion}",+"version": "0.0.1",+g' package.json &&
+rm -rf package.json.copy`
 const replaceNameAppCommand = `cd ${repoName} && sed -i 's+"name": "@aleleba/create-react-ssr",+"name": "${repoName}",+g' package.json`
+const replaceNameAppCommandApple = `cd ${repoName} && sed -i .copy 's+"name": "@aleleba/create-react-ssr",+"name": "${repoName}",+g' package.json &&
+rm -rf package.json.copy`
 
 console.log(`Installing dependencies for ${repoName}`);
 const installedDeps = runCommand(installDepsCommand);
@@ -49,11 +73,18 @@ if(!installedDeps) process.exit(-1);
 const deleteBin = isAppple ? runCommand(deleteBinCommandApple) : (isWin ? runCommand(deleteBinCommandWindows) : runCommand(deleteBinCommand));
 if(!deleteBin) process.exit(-1);
 
-const replaceNewVersion = runCommand(replaceNewVersionCommand)
+const replaceNewVersion = replaceTextOnFile({ 
+    file: 'package.json', 
+    textToBeReplaced: `"version": "${actualVersion}",`, 
+    textReplace: `"version": "0.0.1",`
+})
+if(!replaceNewVersion) process.exit(-1);
+
+/* const replaceNewVersion = runCommand(replaceNewVersionCommand)
 if(!replaceNewVersion) process.exit(-1);
 
 const replaceNameApp = runCommand(replaceNameAppCommand)
-if(!replaceNameApp) process.exit(-1);
+if(!replaceNameApp) process.exit(-1); */
 
 console.log(`Cleaning History of Git for ${repoName}`);
 const cleanGitHistory = isWin ? runCommand(cleanGitHistoryCommandWindows) : runCommand(cleanGitHistoryCommand);
