@@ -85,7 +85,7 @@ const installedDeps = runCommand(installDepsCommand);
 if(!installedDeps) process.exit(-1);
 
 replaceTextOnFile({ 
-    file: '../package.json',
+    file: `./${repoName}/package.json`,
     arrOfObjectsBeReplaced: [
         {
             textToBeReplaced: `"bin": "./bin/cli.js",`, 
