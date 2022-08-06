@@ -30,28 +30,24 @@ const replaceTextOnFile = ({
     textReplace,
     arrOfObjectsBeReplaced
 }) => {
-    fs.readFile(file, 'utf8', function (err,data) {
-        let result
-        if (err) {
-          return console.error(err);
-        }
-        if(arrOfObjectsBeReplaced){
-            arrOfObjectsBeReplaced.forEach( obj => {
-                if(result){
-                    result = result.replace(obj.textToBeReplaced, obj.textReplace).replace(/^\s*[\r\n]/gm, ' ');
-                }else{
-                    result = data.replace(obj.textToBeReplaced, obj.textReplace).replace(/^\s*[\r\n]/gm, ' ');
-                }
-            })
-        }else{
-            result = data.replace(textToBeReplaced, textReplace).replace(/^\s*[\r\n]/gm, ' ');
-        }
-        
-        fs.writeFile(file, result, 'utf8', function (err) {
-            if (err){
-                return console.error(err);
+    const data = fs.readFileSync(file, 'utf8');
+    let result
+    if(arrOfObjectsBeReplaced){
+        arrOfObjectsBeReplaced.forEach( obj => {
+            if(result){
+                result = result.replace(obj.textToBeReplaced, obj.textReplace).replace(/^\s*[\r\n]/gm, ' ');
+            }else{
+                result = data.replace(obj.textToBeReplaced, obj.textReplace).replace(/^\s*[\r\n]/gm, ' ');
             }
-        });
+        })
+    }else{
+        result = data.replace(textToBeReplaced, textReplace).replace(/^\s*[\r\n]/gm, ' ');
+    }
+    
+    fs.writeFileSync(file, result, 'utf8', function (err) {
+        if (err){
+            return console.error(err);
+        }
     });
 }
 
