@@ -1,6 +1,6 @@
 {
   "name": "@aleleba/create-react-ssr",
-  "version": "3.0.45",
+  "version": "3.0.46",
   "description": "Starter Kit of server side render of react",
   "bin": "./bin/cli.js",  
   "main": "src/server/index",
