@@ -29,13 +29,12 @@ const replaceTextOnFile = ({
     textReplace,
     arrOfObjectsBeReplaced
 }) => {
-    const data = file => {
-        try{
-            return fs.readFileSync(file, 'utf8');
-        } catch (e) {
-            console.error(`Failed to read file ${file}`, e);
-            return false;
-        }
+    let data 
+    try{
+        data = fs.readFileSync(file, 'utf8');
+    } catch (e) {
+        console.error(`Failed to read file ${file}`, e);
+        return false;
     }
 
     let result
@@ -51,18 +50,12 @@ const replaceTextOnFile = ({
         result = data.replace(textToBeReplaced, textReplace).replace(/^\s*[\r\n]/gm, ' ');
     }
 
-    const finalFile = file => {
-        try{
-            return fs.writeFileSync(file, result, 'utf8');
-        } catch (e) {
-            console.error(`Failed to read file ${file}`, e);
-            return false;
-        }
-    }
-    if(!finalFile) {
-        process.exit(-1);
-    }else{
-        console.log('Text replaced')
+    try{
+        console.log('text changed')
+        fs.writeFileSync(file, result, 'utf8');
+    } catch (e) {
+        console.error(`Failed to read file ${file}`, e);
+        return false;
     }
 }
     
