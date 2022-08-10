@@ -67,7 +67,8 @@ if(env === 'development'){
 }
 
 const setResponse = (html, preloadedState, manifest) => {
-	const mainStyles = manifest ? manifest['frontend.css'] : 'assets/app.css';
+	const mainStyles = manifest ? manifest['frontend.css'] : 'assets/main/app.css';
+	const vendorStyles = manifest ? manifest['vendors.css'] : '/assets/vendors/app.css';
 	const mainBuild = manifest ? manifest['frontend.js'] : 'assets/app.js';
 	const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
 	const manifestJson = manifest ? `<link rel="manifest" href="${manifest['manifest.json']}">` : '';
@@ -83,6 +84,7 @@ const setResponse = (html, preloadedState, manifest) => {
 			<meta name="theme-color" content="#000000">
 			${manifestJson}
             <link href="${mainStyles}" rel="stylesheet" type="text/css"></link>
+			<link href="${vendorStyles}" rel="stylesheet" type="text/css"></link>
             <title>App</title>
         </head>
         <body>
