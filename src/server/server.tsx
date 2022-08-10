@@ -20,7 +20,7 @@ import { Provider } from 'react-redux';
 import setStore from '../frontend/setStore';
 import initialState from '../frontend/reducers/initialState';
 //Get Hashes
-import getHashManifest from './getHashManifest';
+import { getHashManifest, haveVendorsCss } from './utilsServer';
 //App
 import App from '../frontend/components/App';
 
@@ -67,8 +67,8 @@ if(env === 'development'){
 }
 
 const setResponse = (html, preloadedState, manifest) => {
-	const mainStyles = manifest ? manifest['frontend.css'] : 'assets/main/app.css';
-	const vendorStyles = manifest ? manifest['vendors.css'] : '/assets/vendors/app.css';
+	const mainStyles = manifest ? manifest['frontend.css'] : 'assets/main.css';
+	const vendorStyles = manifest ? manifest['vendors.css'] : 'assets/vendors.css';
 	const mainBuild = manifest ? manifest['frontend.js'] : 'assets/app.js';
 	const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
 	const manifestJson = manifest ? `<link rel="manifest" href="${manifest['manifest.json']}">` : '';
@@ -84,7 +84,7 @@ const setResponse = (html, preloadedState, manifest) => {
 			<meta name="theme-color" content="#000000">
 			${manifestJson}
             <link href="${mainStyles}" rel="stylesheet" type="text/css"></link>
-			<link href="${vendorStyles}" rel="stylesheet" type="text/css"></link>
+			${haveVendorsCss() ? `<link href="${vendorStyles}" rel="stylesheet" type="text/css"></link>` : ''}
             <title>App</title>
         </head>
         <body>

@@ -8,7 +8,7 @@ const OtherComponent = () => (
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-            Edit src/frontend/OtherComponent.jsx and save to reload.
+            Edit <code>src/frontend/OtherComponent.jsx</code> and save to reload.
         </p>
         <Link className="App-link" to="/">Initial Component</Link>
       </header>
