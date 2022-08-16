@@ -76,7 +76,7 @@ const frontendConfig = {
 			filename: '[path][base].gz',
 		}),
 		new MiniCssExtractPlugin({
-			filename: 'assets/[name]/app-[fullhash].css',
+			filename: 'assets/[name]-[fullhash].css',
 		}),
 		new WebpackManifestPlugin({
 			fileName: 'assets/manifest-hash.json',
@@ -198,7 +198,7 @@ const serverConfig = {
 			filename: '[path][base].gz',
 		}),
 		new MiniCssExtractPlugin({
-			filename: 'assets/[name]/app-[fullhash].css',
+			filename: 'assets/[name]-[fullhash].css',
 		}),
 		new WebpackManifestPlugin({
 			fileName: 'assets/manifest-hash.json',

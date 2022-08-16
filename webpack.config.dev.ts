@@ -69,7 +69,7 @@ const config: Configuration = {
 		new webpack.HotModuleReplacementPlugin(),
 		new ReactRefreshWebpackPlugin(),
 		new MiniCssExtractPlugin({
-			filename: 'assets/[name]/app.css',
+			filename: 'assets/[name].css',
 		}),
 		new ESLintPlugin(),
 		new webpack.DefinePlugin({
