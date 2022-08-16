@@ -30,9 +30,9 @@ const routesUrls = routes.map( route => route.path);
 
 const app = express();
 
+// @ts-ignore:next-line
+const compiler = webpack(webpackConfig);
 if(env === 'development'){
-	// @ts-ignore:next-line
-	const compiler = webpack(webpackConfig);
 	const serverConfig = { 
 		serverSideRender: true,
 		publicPath: webpackConfig.output?.publicPath,
@@ -72,6 +72,8 @@ const setResponse = (html, preloadedState, manifest) => {
 	const mainBuild = manifest ? manifest['frontend.js'] : 'assets/app.js';
 	const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
 	const manifestJson = manifest ? `<link rel="manifest" href="${manifest['manifest.json']}">` : '';
+	const memoryFs = compiler.outputFileSystem
+	const haveVendor = haveVendorsCss(manifest, memoryFs)
 
 	return(`
     <!DOCTYPE html>
@@ -84,7 +86,7 @@ const setResponse = (html, preloadedState, manifest) => {
 			<meta name="theme-color" content="#000000">
 			${manifestJson}
             <link href="${mainStyles}" rel="stylesheet" type="text/css"></link>
-			${haveVendorsCss() ? `<link href="${vendorStyles}" rel="stylesheet" type="text/css"></link>` : ''}
+			${haveVendor ? `<link href="${vendorStyles}" rel="stylesheet" type="text/css"></link>` : ''}
             <title>App</title>
         </head>
         <body>
