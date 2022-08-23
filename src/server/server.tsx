@@ -1,8 +1,8 @@
 //Dependencies of Server
 import express from 'express';
-import config from '../../config';
 import webpack from 'webpack';
 import helmet from 'helmet';
+import config from '../../config';
 
 //Dependencies of HotReloading
 import webpackConfig from '../../webpack.config.dev';
