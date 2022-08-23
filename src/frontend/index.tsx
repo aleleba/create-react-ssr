@@ -1,5 +1,5 @@
 import React from 'react';
-import { hydrateRoot } from 'react-dom/client';
+import { hydrateRoot, createRoot } from 'react-dom/client';
 // Router
 import { BrowserRouter as Router } from 'react-router-dom';
 // Redux
@@ -37,8 +37,19 @@ delete window.__PRELOADED_STATE__;
 
 const container = document.getElementById('app')!;
 
+if(env === 'development') {
+	const root = createRoot(container);
+	root.render(
+		<Provider store={store}>
+			<Router>
+				<App />
+			</Router>
+		</Provider>
+	);
+}
+
 // add "const root" to be able to rerender.
-hydrateRoot(container,
+env === 'production' && hydrateRoot(container,
 	<Provider store={store}>
 		<Router>
 			<App />
