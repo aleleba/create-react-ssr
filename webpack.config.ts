@@ -1,5 +1,6 @@
 import path  from 'path';
-import * as dotenv from 'dotenv';
+import fs from 'fs';
+import { deFaultValues } from './config';
 import webpack from 'webpack';
 import CompressionWebpackPlugin from 'compression-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -10,14 +11,33 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 
-const dotEnvToParse = dotenv.config();
-
 const ROOT_DIR = path.resolve(__dirname);
 const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
 const BUILD_DIR = resolvePath('build');
 const { InjectManifest } = require('workbox-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const PUBLIC_URL = process.env.PUBLIC_URL || '/';
+
+const copyPatterns = [
+	{
+		from: `${ROOT_DIR}/public/manifest.json`, to: '',
+	},
+	{
+		from: `${ROOT_DIR}/public/favicon.ico`, to: '',
+	},
+	{
+		from: `${ROOT_DIR}/public/logo192.png`, to: '',
+	},
+	{
+		from: `${ROOT_DIR}/public/logo512.png`, to: '',
+	},
+	
+]
+
+if(fs.existsSync(`${ROOT_DIR}/public/img`)){
+	copyPatterns.push({
+		from: `${ROOT_DIR}/public/img`, to: 'assets/img', 
+	})
+}
 
 const frontendConfig = {
 	entry: {
@@ -26,7 +46,7 @@ const frontendConfig = {
 	output: {
 		path: BUILD_DIR,
 		filename: 'assets/app-[name]-[fullhash].js',
-		publicPath: PUBLIC_URL,
+		publicPath: deFaultValues.PUBLIC_URL,
 	},
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
@@ -57,7 +77,7 @@ const frontendConfig = {
 				test: /\.(png|jpg|jpeg|gif|svg|ico|mp4|avi|ttf|otf|eot|woff|woff2|pdf)$/,
 				loader: 'file-loader',
 				options: {
-					name: 'assets/media/[name].[ext]',
+					name: 'assets/[name].[ext]',
 				},
 			},
 			{
@@ -88,25 +108,11 @@ const frontendConfig = {
 			],
 		}),
 		new ESLintPlugin(),
-		new webpack.DefinePlugin({
-			'process.env': JSON.stringify(dotEnvToParse.parsed),
-			'process.env.PUBLIC_URL': JSON.stringify(PUBLIC_URL),
+		new webpack.EnvironmentPlugin({
+			...deFaultValues,
 		}),
 		new CopyPlugin({
-			patterns: [
-				{
-					from: `${ROOT_DIR}/public/manifest.json`, to: '',
-				},
-				{
-					from: `${ROOT_DIR}/public/favicon.ico`, to: '',
-				},
-				{
-					from: `${ROOT_DIR}/public/logo192.png`, to: '',
-				},
-				{
-					from: `${ROOT_DIR}/public/logo512.png`, to: '',
-				},
-			]
+			patterns: copyPatterns
 		}),
 		new InjectManifest({
 			swSrc: './service-worker.ts',
@@ -148,7 +154,7 @@ const serverConfig = {
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'server/app-[name].js',
-		publicPath: PUBLIC_URL,
+		publicPath: deFaultValues.PUBLIC_URL,
 	},
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
@@ -179,7 +185,7 @@ const serverConfig = {
 				test: /\.(png|jpg|jpeg|gif|svg|ico|mp4|avi|ttf|otf|eot|woff|woff2|pdf)$/,
 				loader: 'file-loader',
 				options: {
-					name: 'assets/media/[name].[ext]',
+					name: 'assets/[name].[ext]',
 				},
 			},
 			{
@@ -205,9 +211,8 @@ const serverConfig = {
 		}),
 		new CleanWebpackPlugin(),
 		new ESLintPlugin(),
-		new webpack.DefinePlugin({
-			'process.env': JSON.stringify(dotEnvToParse.parsed),
-			'process.env.PUBLIC_URL': JSON.stringify(PUBLIC_URL),
+		new webpack.EnvironmentPlugin({
+			...deFaultValues,
 		}),
 		new InjectManifest({
 			swSrc: './service-worker.ts',

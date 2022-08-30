@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { IInitialState } from './reducers/index';
 import setStore from './setStore';
-import config from '../../config';
+import { config } from '../../config';
 
 import './styles/global.scss';
 import App from './components/App';
@@ -28,7 +28,7 @@ interface IHot {
 	accept: any
 }
 
-const { env } = config;
+const { ENV } = config;
 
 const preloadedState = window.__PRELOADED_STATE__;
 const store = setStore({ initialState: preloadedState });
@@ -37,7 +37,7 @@ delete window.__PRELOADED_STATE__;
 
 const container = document.getElementById('app')!;
 
-if(env === 'development') {
+if(ENV === 'development') {
 	const root = createRoot(container);
 	root.render(
 		<Provider store={store}>
@@ -49,7 +49,7 @@ if(env === 'development') {
 }
 
 // add "const root" to be able to rerender.
-env === 'production' && hydrateRoot(container,
+ENV === 'production' && hydrateRoot(container,
 	<Provider store={store}>
 		<Router>
 			<App />
@@ -72,7 +72,7 @@ env === 'production' && hydrateRoot(container,
     </Provider>
 ); */
 
-if((env) && (env === 'production')){
+if((ENV) && (ENV === 'production')){
 	serviceWorkerRegistration();
 }
 

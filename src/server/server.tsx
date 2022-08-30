@@ -2,7 +2,7 @@
 import express from 'express';
 import webpack from 'webpack';
 import helmet from 'helmet';
-import config from '../../config';
+import { config } from '../../config';
 
 //Dependencies of HotReloading
 import webpackConfig from '../../webpack.config.dev';
@@ -24,7 +24,7 @@ import { getHashManifest, haveVendorsCss } from './utilsServer';
 //App
 import App from '../frontend/components/App';
 
-const { env, port } = config;
+const { ENV, PORT } = config;
 
 const routesUrls = routes.map( route => route.path);
 
@@ -32,7 +32,7 @@ const app = express();
 
 // @ts-ignore:next-line
 const compiler = webpack(webpackConfig);
-if(env === 'development'){
+if(ENV === 'development'){
 	const serverConfig = { 
 		serverSideRender: true,
 		publicPath: webpackConfig.output?.publicPath,
@@ -122,6 +122,6 @@ app
 	.get('*', renderApp);
 
 
-app.listen(port, () => {
-	console.log(`Server running on port ${port}`);
+app.listen(PORT, () => {
+	console.log(`Server running on port ${PORT}`);
 });

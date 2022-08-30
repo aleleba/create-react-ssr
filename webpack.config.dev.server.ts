@@ -1,5 +1,6 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpackNodeExternals from 'webpack-node-externals';
+import WebpackShellPluginNext from 'webpack-shell-plugin-next';
 import path from 'path';
 import { Configuration } from 'webpack';
 const ROOT_DIR = path.resolve(__dirname);
@@ -57,7 +58,7 @@ const config: Configuration = {
         test: fontsAndImagesExtensions,
         loader: 'file-loader',
 				options: {
-					name: '/assets/media/[name].[ext]',
+					name: '/assets/[name].[ext]',
           emitFile: false,
 				},
       },
@@ -82,6 +83,13 @@ const config: Configuration = {
     new MiniCssExtractPlugin({
         filename: 'assets/app.css',
     }),
+    new WebpackShellPluginNext({
+			onBuildEnd: {
+				scripts: ['node build/server.js'],
+				blocking: false,
+				parallel: true
+			}
+		})
   ],
 };
 
