@@ -1,7 +1,7 @@
 import fs from 'fs';
-import config from '../../config';
+import { config } from '../../config';
 
-const { env } = config
+const { ENV } = config;
 
 export const getHashManifest = () => {
 	try {
@@ -18,8 +18,8 @@ export const haveVendorsCss = (manifest, memoryFs) => {
 	try {
 		const baseUrl = __dirname.replace(/\/server(.*)/,'');
 		const fullURL = `${baseUrl}${manifest ? manifest['vendors.css'] : '/build/assets/vendors.css'}`;
-		env === 'production' && fs.readFileSync(fullURL).toString();
-		env === 'development' && memoryFs.readFileSync(fullURL).toString();
+		ENV === 'production' && fs.readFileSync(fullURL).toString();
+		ENV === 'development' && memoryFs.readFileSync(fullURL).toString();
 		return true
 	}catch(err){
 		// console.error(err);

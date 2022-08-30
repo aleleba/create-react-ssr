@@ -1,6 +1,11 @@
-const config = {
-	env: process.env.ENV ? process.env.ENV : 'production',
-	port: process.env.PORT ? process.env.PORT : 80,
+export const config = {
+	ENV: process.env.ENV,
+	PORT: process.env.PORT,
+	PUBLIC_URL: process.env.PUBLIC_URL, 
 };
 
-export default config;
+export const deFaultValues = {
+	ENV: 'production',
+	PORT: 80,
+	PUBLIC_URL: '/',
+}
