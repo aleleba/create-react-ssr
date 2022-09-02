@@ -6,6 +6,6 @@ export const config = {
 
 export const deFaultValues = {
 	ENV: 'production',
-	PORT: 80,
+	PORT: 3000,
 	PUBLIC_URL: '/',
 }

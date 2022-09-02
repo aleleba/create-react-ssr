@@ -1,7 +1,7 @@
 // Redux
 import { legacy_createStore as createStore} from 'redux'; //, applyMiddleware
 // import { Provider } from 'react-redux';
-import { composeWithDevTools as composeWithDevToolsWeb } from 'redux-devtools-extension';
+import { composeWithDevTools as composeWithDevToolsWeb } from '@redux-devtools/extension';
 import { config } from '../../config';
 import reducer, { IInitialState } from './reducers';
 
