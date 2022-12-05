@@ -10,33 +10,4 @@ require('@babel/register')({
 	]
 });
 
-require('asset-require-hook')({
-	extensions: [
-		// images
-		'jpg',
-		'png',
-		'svg',
-		'gif',
-		'ico',
-		// videos
-		'mp4',
-		'avi',
-		// files
-		'pdf',
-	],
-	name: '/assets/media/[name].[ext]',
-});
-
-require('asset-require-hook')({
-	extensions: [
-		// typography
-		'ttf',
-		'otf',
-		'eot',
-		'woff',
-		'woff2',
-	],
-	name: '/assets/fonts/[name].[ext]',
-});
-
 require('./server');

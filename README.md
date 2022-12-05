@@ -8,9 +8,9 @@ Tech(Library or Framework) | Version |
 --- | --- |
 React (Render Library) | 18.2.0
 Redux (Global State Management) | 4.2.0
-React Router DOM (Routing) | 6.4.2
-Jest (Testing) | 29.2.0
-Typescript | 4.8.4
+React Router DOM (Routing) | 6.4.4
+Jest (Testing) | 29.3.1
+Typescript | 4.9.3
 
 ## Setup
 To create a new project run in the terminal:
