@@ -25,13 +25,17 @@ You will need to create a new .env file at the root of the project for global co
 This is an exaple of config.
 ```
 #Environment
-ENV=development #Default production
+ENV= #Default production
 #App Port
-PORT=3000 #Default 80
+PORT= #Default 80
 #PUBLIC URL
-#PUBLIC_URL= #Default /
+PUBLIC_URL= #Default 'auto'
+#Prefix URL
+PREFIX_URL= #Default ''
+#ONLY EXACT PATH
+ONLY_EXACT_PATH= #Default false
 ```
-The default environment is production, the app port defauld is 80 and the default public url is "/".
+The default environment is production, the app port defauld is 80 and the default public url is "auto", use prefix url if you want a prefix on base url, use exact path to validate if you want to have strict exact paths.
 
 ### For Development
 In the terminal run:

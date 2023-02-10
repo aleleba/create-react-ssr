@@ -21,10 +21,10 @@ const config: Configuration = {
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     alias: {
-      '@app': path.resolve(__dirname, 'src/frontend/components/App'),
 			'@components': path.resolve(__dirname, 'src/frontend/components/'),
 			'@styles': path.resolve(__dirname, 'src/frontend/styles/'),
-		}
+      '@config': path.resolve(__dirname, 'config/'),
+		},
   },
   module: {
     rules: [
@@ -58,7 +58,7 @@ const config: Configuration = {
         test: fontsAndImagesExtensions,
         loader: 'file-loader',
 				options: {
-					name: '/assets/[name].[ext]',
+					name: 'assets/[name].[ext]',
           emitFile: false,
 				},
       },

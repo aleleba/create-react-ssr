@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from '../logo.svg';
 import './InitialComponent.scss';
 import { Link } from "react-router-dom";
 
 const InitialComponent = () => (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src="assets/img/logo.svg" className="App-logo" alt="logo" />
         <p>
           Edit <code>src/frontend/InitialComponent.jsx</code> and save to reload.
         </p>

@@ -1,6 +1,6 @@
 import path  from 'path';
 import fs from 'fs';
-import { deFaultValues } from './config';
+import { config as envConfig } from './config';
 import webpack from 'webpack';
 import CompressionWebpackPlugin from 'compression-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -46,13 +46,14 @@ const frontendConfig = {
 	output: {
 		path: BUILD_DIR,
 		filename: 'assets/app-[name]-[fullhash].js',
-		publicPath: deFaultValues.PUBLIC_URL,
+		publicPath: envConfig.PUBLIC_URL,
 	},
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
 		alias: {
 			'@components': path.resolve(__dirname, 'src/frontend/components/'),
 			'@styles': path.resolve(__dirname, 'src/frontend/styles/'),
+			'@config': path.resolve(__dirname, 'config/'),
 		}
 	},
 	mode: 'production',
@@ -100,6 +101,7 @@ const frontendConfig = {
 		}),
 		new WebpackManifestPlugin({
 			fileName: 'assets/manifest-hash.json',
+			publicPath: envConfig.PREFIX_URL,
 		}),
 		new CleanWebpackPlugin({
 			cleanOnceBeforeBuildPatterns: [
@@ -109,7 +111,7 @@ const frontendConfig = {
 		}),
 		new ESLintPlugin(),
 		new webpack.EnvironmentPlugin({
-			...deFaultValues,
+			...envConfig,
 		}),
 		new CopyPlugin({
 			patterns: copyPatterns
@@ -154,13 +156,14 @@ const serverConfig = {
 	output: {
 		path: path.resolve(__dirname, 'build'),
 		filename: 'server/app-[name].js',
-		publicPath: deFaultValues.PUBLIC_URL,
+		publicPath: envConfig.PUBLIC_URL,
 	},
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
 		alias: {
 			'@components': path.resolve(__dirname, 'src/frontend/components/'),
 			'@styles': path.resolve(__dirname, 'src/frontend/styles/'),
+      		'@config': path.resolve(__dirname, 'config/'),	
 		}
 	},
 	mode: 'production',
@@ -208,12 +211,10 @@ const serverConfig = {
 		}),
 		new WebpackManifestPlugin({
 			fileName: 'assets/manifest-hash.json',
+			publicPath: envConfig.PREFIX_URL,
 		}),
 		new CleanWebpackPlugin(),
 		new ESLintPlugin(),
-		new webpack.EnvironmentPlugin({
-			...deFaultValues,
-		}),
 		new InjectManifest({
 			swSrc: './service-worker.ts',
 			swDest: 'service-worker.js',
