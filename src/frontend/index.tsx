@@ -28,7 +28,7 @@ interface IHot {
 	accept: any
 }
 
-const { ENV } = config;
+const { ENV, PREFIX_URL } = config;
 
 const preloadedState = window.__PRELOADED_STATE__;
 const store = setStore({ initialState: preloadedState });
@@ -41,7 +41,7 @@ if(ENV === 'development') {
 	const root = createRoot(container);
 	root.render(
 		<Provider store={store}>
-			<Router>
+			<Router basename={PREFIX_URL}>
 				<App />
 			</Router>
 		</Provider>
@@ -51,7 +51,7 @@ if(ENV === 'development') {
 // add "const root" to be able to rerender.
 ENV === 'production' && hydrateRoot(container,
 	<Provider store={store}>
-		<Router>
+		<Router basename={PREFIX_URL}>
 			<App />
 		</Router>
 	</Provider>,

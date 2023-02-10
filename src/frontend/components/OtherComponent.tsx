@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const OtherComponent = () => (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src="assets/img/logo.svg" className="App-logo" alt="logo" />
         <p>
             Edit <code>src/frontend/OtherComponent.jsx</code> and save to reload.
         </p>

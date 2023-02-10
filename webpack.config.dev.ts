@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import { deFaultValues } from './config';
+import { config as envConfig } from './config';
 import webpack, { Configuration } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
@@ -33,18 +33,19 @@ if(fs.existsSync(`${ROOT_DIR}/../public/img`)){
 }
 
 const config: Configuration = {
-	entry: ['webpack-hot-middleware/client?path=/reload_wss&timeout=2000&reload=true&autoConnect=true', `${ROOT_DIR}/../src/frontend/index.tsx`],
+	entry: [`webpack-hot-middleware/client?path=${envConfig.PREFIX_URL}/reload_wss&timeout=2000&reload=true&autoConnect=true`, `${ROOT_DIR}/../src/frontend/index.tsx`],
 	output: {
 		path: BUILD_DIR,
 		filename: 'assets/app.js',
-		publicPath: deFaultValues.PUBLIC_URL,
+		publicPath: envConfig.PUBLIC_URL,
 	},
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
 		alias: {
-			'@components': path.resolve(__dirname, 'src/frontend/components/'),
-			'@styles': path.resolve(__dirname, 'src/frontend/styles/'),
-		}
+			'@components': path.resolve(__dirname, '../src/frontend/components/'),
+			'@styles': path.resolve(__dirname, '../src/frontend/styles/'),
+      		'@config': path.resolve(__dirname, '../config/'),
+		},
 	},
 	devtool: 'inline-source-map',
 	mode: 'development',
@@ -92,7 +93,7 @@ const config: Configuration = {
 		}),
 		new ESLintPlugin(),
 		new webpack.EnvironmentPlugin({
-			...deFaultValues,
+			...envConfig,
 		}),
 		new CopyPlugin({
 			patterns: copyPatterns

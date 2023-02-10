@@ -12,5 +12,4 @@ const INITIAL_COMPONENT = {
 	element: <InitialComponent />,
 };
 
-
 export default [ INITIAL_COMPONENT, OTHER_COMPONENT ];

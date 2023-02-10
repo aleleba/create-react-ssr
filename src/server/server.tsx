@@ -2,7 +2,7 @@
 import express from 'express';
 import webpack from 'webpack';
 import helmet from 'helmet';
-import { config } from '../../config';
+import { config } from '@config';
 
 //Dependencies of HotReloading
 import webpackConfig from '../../webpack.config.dev';
@@ -24,9 +24,9 @@ import { getHashManifest, haveVendorsCss } from './utilsServer';
 //App
 import App from '../frontend/components/App';
 
-const { ENV, PORT } = config;
+const { ENV, PORT, PREFIX_URL, ONLY_EXACT_PATH } = config;
 
-const routesUrls = routes.map( route => route.path);
+const routesUrls = routes.map( route => route.path );
 
 const app = express();
 
@@ -47,6 +47,7 @@ if(ENV === 'development'){
 }else{
 	const baseUrl = __dirname.replace(/\/server(.*)/,'');
 	const fullURL = `${baseUrl}` ;
+	console.log(fullURL)
 	app
 		.use((req, res, next) => {
 			if(!req.hashManifest) req.hashManifest = getHashManifest();
@@ -102,17 +103,21 @@ const setResponse = (html, preloadedState, manifest) => {
 };
 
 const renderApp = (req, res, next) => {
-	if(routesUrls.includes(req.url)){
-		const store = setStore({ initialState });
-		const preloadedState = store.getState();
-		const html = renderToString(
-			// @ts-ignore:next-line
-			<Provider store={store}>
-				<StaticRouter location={req.url}>
-					<App />
-				</StaticRouter>
-			</Provider>
-		);
+	const store = setStore({ initialState });
+	const preloadedState = store.getState();
+	const html = renderToString(
+		// @ts-ignore:next-line
+		<Provider store={store}>
+			<StaticRouter location={`${PREFIX_URL}${req.url}`} basename={PREFIX_URL}>
+				<App />
+			</StaticRouter>
+		</Provider>
+	);
+	if(ONLY_EXACT_PATH){
+		if(routesUrls.includes(req.url)){
+			res.send(setResponse(html, preloadedState, req.hashManifest));
+		}
+	} else {
 		res.send(setResponse(html, preloadedState, req.hashManifest));
 	}
 	next();
@@ -120,7 +125,6 @@ const renderApp = (req, res, next) => {
 
 app
 	.get('*', renderApp);
-
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
