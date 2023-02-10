@@ -47,7 +47,6 @@ if(ENV === 'development'){
 }else{
 	const baseUrl = __dirname.replace(/\/server(.*)/,'');
 	const fullURL = `${baseUrl}` ;
-	console.log(fullURL)
 	app
 		.use((req, res, next) => {
 			if(!req.hashManifest) req.hashManifest = getHashManifest();
