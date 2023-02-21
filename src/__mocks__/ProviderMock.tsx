@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import initialStateReducer from '../frontend/reducers/initialState';
 import setStore from '../frontend/setStore';
 
-const ProviderMock = ({ children, initialState }) => {
+export const ProviderMock = ({ children, initialState }: { children: any, initialState?: any}) => {
     let initialStateMock = initialStateReducer
 
     if(initialState !== undefined){

@@ -13,3 +13,5 @@ export const config = {
 	PREFIX_URL: process.env.PREFIX_URL ? process.env.PREFIX_URL : deFaultValues.PREFIX_URL,
 	ONLY_EXACT_PATH: process.env.ONLY_EXACT_PATH ? process.env.ONLY_EXACT_PATH === 'true' : deFaultValues.ONLY_EXACT_PATH,
 };
+
+export default config

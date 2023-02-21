@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import ProviderMock from '../../../__mocks__/ProviderMock';
-import App from '../App';
+import { ProviderMock } from '@mocks';
+import App from '@components/App';
 
 describe('<App/> Component', () => {
     beforeEach(() => {
@@ -15,7 +15,7 @@ describe('<App/> Component', () => {
         }));
 
         render(
-            <ProviderMock initialState={undefined}>
+            <ProviderMock>
                 <App />
             </ProviderMock>
         )

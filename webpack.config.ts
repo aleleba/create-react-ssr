@@ -10,12 +10,14 @@ import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
+import { resolveTsAliases } from "resolve-ts-aliases";
 
 const ROOT_DIR = path.resolve(__dirname);
 const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
 const BUILD_DIR = resolvePath('build');
 const { InjectManifest } = require('workbox-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const alias = resolveTsAliases(path.resolve("tsconfig.json"));
 
 const copyPatterns = [
 	{
@@ -50,11 +52,7 @@ const frontendConfig = {
 	},
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
-		alias: {
-			'@components': path.resolve(__dirname, 'src/frontend/components/'),
-			'@styles': path.resolve(__dirname, 'src/frontend/styles/'),
-			'@config': path.resolve(__dirname, 'config/'),
-		}
+		alias,
 	},
 	mode: 'production',
 	module: {
@@ -160,11 +158,7 @@ const serverConfig = {
 	},
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
-		alias: {
-			'@components': path.resolve(__dirname, 'src/frontend/components/'),
-			'@styles': path.resolve(__dirname, 'src/frontend/styles/'),
-      		'@config': path.resolve(__dirname, 'config/'),	
-		}
+		alias,
 	},
 	mode: 'production',
 	module: {
