@@ -1,1 +1,2 @@
-module.exports = ''; 
+export const fileMock = '';
+module.exports = fileMock;

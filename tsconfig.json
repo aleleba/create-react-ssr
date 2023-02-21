@@ -26,13 +26,27 @@
       "node"
     ],
     "sourceMap": true,
-    "baseUrl": "**/*",
+    "baseUrl": ".",
     "outDir": "build",
     "skipLibCheck": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "paths": {
+      "@components/*": ["src/frontend/components/*"],
+      "@components": ["src/frontend/components"],
+      "@styles/*": ["src/frontend/styles/*"],
+      "@styles": ["src/frontend/styles"],
+      "@actions/*": ["src/frontend/actions/*"],
+      "@actions": ["src/frontend/actions"],
+      "@reducers/*": ["src/frontend/reducers"],
+      "@reducers": ["src/frontend/reducers"],
+      "@config/*": ["config/*"],
+      "@config": ["config"],
+      "@mocks/*": ["src/__mocks__/*"],
+      "@mocks": ["src/__mocks__"]
+    }
   },
   "include": [
-    "**/*"
+    "."
   ],
   "exclude": [
    "node_modules",

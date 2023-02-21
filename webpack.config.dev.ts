@@ -6,10 +6,12 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
+import { resolveTsAliases } from "resolve-ts-aliases";
 
 const ROOT_DIR = path.resolve(__dirname);
 const resolvePath = (...args: string[]) => path.resolve(ROOT_DIR, ...args);
 const BUILD_DIR = resolvePath('build');
+const alias = resolveTsAliases(path.resolve("tsconfig.json"));
 
 const copyPatterns = [
 	{
@@ -41,11 +43,7 @@ const config: Configuration = {
 	},
 	resolve: {
 		extensions: ['.js', '.jsx','.ts','.tsx', '.json'],
-		alias: {
-			'@components': path.resolve(__dirname, '../src/frontend/components/'),
-			'@styles': path.resolve(__dirname, '../src/frontend/styles/'),
-      		'@config': path.resolve(__dirname, '../config/'),
-		},
+		alias,
 	},
 	devtool: 'inline-source-map',
 	mode: 'development',

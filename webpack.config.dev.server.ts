@@ -1,6 +1,7 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpackNodeExternals from 'webpack-node-externals';
 import WebpackShellPluginNext from 'webpack-shell-plugin-next';
+import { resolveTsAliases } from "resolve-ts-aliases";
 import path from 'path';
 import { Configuration } from 'webpack';
 const ROOT_DIR = path.resolve(__dirname);
@@ -10,6 +11,7 @@ const scriptExtensions = /\.(tsx|ts|js|jsx|mjs)$/;
 const styleExtensions = /\.(css|less|styl|scss|sass|sss)$/;
 const fontsExtensions = /\.(eot|otf|ttf|woff|woff2)$/;
 const fontsAndImagesExtensions = /\.(png|jpg|jpeg|gif|svg|ico|mp4|avi|ttf|otf|eot|woff|woff2|pdf)$/;
+const alias = resolveTsAliases(path.resolve("tsconfig.json"));
 
 const config: Configuration = {
   target: 'node',
@@ -20,11 +22,7 @@ const config: Configuration = {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
-    alias: {
-			'@components': path.resolve(__dirname, 'src/frontend/components/'),
-			'@styles': path.resolve(__dirname, 'src/frontend/styles/'),
-      '@config': path.resolve(__dirname, 'config/'),
-		},
+    alias,
   },
   module: {
     rules: [

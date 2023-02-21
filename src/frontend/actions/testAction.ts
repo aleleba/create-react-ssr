@@ -14,7 +14,7 @@ export interface IChangeHelloPayload {
 export type TTest = IChangeHello
 
 const changeHello = (payload: string) => ({
-    type: 'CREATE_USER',
+    type: ActionTypesTest.ChangeHello,
     payload
 })
 
