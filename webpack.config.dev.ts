@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import path from 'path';
 import fs from 'fs';
 import { config as envConfig } from './config';
@@ -6,12 +7,12 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
-import { resolveTsAliases } from "resolve-ts-aliases";
+import { resolveTsAliases } from 'resolve-ts-aliases';
 
 const ROOT_DIR = path.resolve(__dirname);
 const resolvePath = (...args: string[]) => path.resolve(ROOT_DIR, ...args);
 const BUILD_DIR = resolvePath('build');
-const alias = resolveTsAliases(path.resolve("tsconfig.json"));
+const alias = resolveTsAliases(path.resolve('tsconfig.json'));
 
 const copyPatterns = [
 	{
@@ -26,12 +27,12 @@ const copyPatterns = [
 	{
 		from: `${ROOT_DIR}/../public/logo512.png`, to: '',
 	},
-]
+];
 
 if(fs.existsSync(`${ROOT_DIR}/../public/img`)){
 	copyPatterns.push({
 		from: `${ROOT_DIR}/../public/img`, to: 'assets/img', 
-	})
+	});
 }
 
 const config: Configuration = {
@@ -118,4 +119,4 @@ const config: Configuration = {
 	},
 };
 
-export default config
+export default config;

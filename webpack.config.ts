@@ -10,14 +10,14 @@ import { WebpackManifestPlugin } from 'webpack-manifest-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
-import { resolveTsAliases } from "resolve-ts-aliases";
+import { resolveTsAliases } from 'resolve-ts-aliases';
 
 const ROOT_DIR = path.resolve(__dirname);
 const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
 const BUILD_DIR = resolvePath('build');
 const { InjectManifest } = require('workbox-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
-const alias = resolveTsAliases(path.resolve("tsconfig.json"));
+const alias = resolveTsAliases(path.resolve('tsconfig.json'));
 
 const copyPatterns = [
 	{
@@ -33,12 +33,12 @@ const copyPatterns = [
 		from: `${ROOT_DIR}/public/logo512.png`, to: '',
 	},
 	
-]
+];
 
 if(fs.existsSync(`${ROOT_DIR}/public/img`)){
 	copyPatterns.push({
 		from: `${ROOT_DIR}/public/img`, to: 'assets/img', 
-	})
+	});
 }
 
 const frontendConfig = {
@@ -149,7 +149,7 @@ const serverConfig = {
 	entry: {
 		server: './src/server/index.ts',
 	},
-	target: "node",
+	target: 'node',
 	externals: [nodeExternals()],
 	output: {
 		path: path.resolve(__dirname, 'build'),

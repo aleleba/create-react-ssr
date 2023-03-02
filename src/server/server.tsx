@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 //Dependencies of Server
 import express from 'express';
 import webpack from 'webpack';
@@ -28,6 +29,8 @@ const { ENV, PORT, PREFIX_URL, ONLY_EXACT_PATH } = config;
 
 const routesUrls = routes.map( route => route.path );
 
+const isWin = process.platform === 'win32';
+
 const app = express();
 
 // @ts-ignore:next-line
@@ -46,20 +49,23 @@ if(ENV === 'development'){
 		}));
 }else{
 	const baseUrl = __dirname.replace(/\/server(.*)/,'');
+	const baseUrlWin = __dirname.replace(/\\server(.*)/,'');
 	const fullURL = `${baseUrl}` ;
+	const fullURLWin = `${baseUrlWin}` ;
 	app
 		.use((req, res, next) => {
 			if(!req.hashManifest) req.hashManifest = getHashManifest();
 			next();
 		})
-		.use(express.static(fullURL))
+		.use(express.static(isWin ? fullURLWin : fullURL))
 		.use(helmet())
 		.use(helmet.permittedCrossDomainPolicies())
 		.use(helmet({
 			contentSecurityPolicy: {
 				directives: {
 					...helmet.contentSecurityPolicy.getDefaultDirectives(),
-					'script-src': ['\'self\'', '\'unsafe-inline\''],//"example.com"
+					'script-src': ['\'self\'', '\'unsafe-inline\''], //"example.com"
+					'connectSrc': ['\'self\'', '\'unsafe-inline\'', 'localhost:*']
 				},
 			},
 		}))
@@ -72,8 +78,8 @@ const setResponse = (html, preloadedState, manifest) => {
 	const mainBuild = manifest ? manifest['frontend.js'] : 'assets/app.js';
 	const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
 	const manifestJson = manifest ? `<link rel="manifest" href="${manifest['manifest.json']}">` : '';
-	const memoryFs = compiler.outputFileSystem
-	const haveVendor = haveVendorsCss(manifest, memoryFs)
+	const memoryFs = compiler.outputFileSystem;
+	const haveVendor = haveVendorsCss(manifest, memoryFs);
 
 	return(`
     <!DOCTYPE html>

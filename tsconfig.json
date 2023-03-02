@@ -51,6 +51,7 @@
   "exclude": [
    "node_modules",
    "build",
-   "PRNameGenerator.ts"
+   "PRNameGenerator.ts",
+   "cypress.config.ts"
   ]
 }
