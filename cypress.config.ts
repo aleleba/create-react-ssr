@@ -5,7 +5,7 @@ export default defineConfig({
 		/*setupNodeEvents(on, config) {
 			// implement node event listeners here
 		},*/
-		baseUrl: 'http://localhost',
+		baseUrl: 'http://localhost:3000',
 		specPattern: 'cypress/e2e/**/*.{js,jsx,ts,tsx}',
 		experimentalRunAllSpecs: true,
 	},
