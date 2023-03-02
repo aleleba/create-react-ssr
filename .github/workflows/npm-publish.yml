@@ -29,7 +29,7 @@ jobs:
           build: npm run build
           start: npm start
   publish-npm:
-    needs: build
+    needs: [ build, cypress-run ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
