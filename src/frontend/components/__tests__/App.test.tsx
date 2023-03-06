@@ -8,7 +8,7 @@ describe('<App/> Component', () => {
         fetchMock.resetMocks();
     });
 
-    test('Should render root <App /> Component', async () => {
+    it('Should render root <App /> Component', async () => {
         fetchMock.mockResponseOnce(JSON.stringify({
             //First Data Fetch
             data: 'data'
