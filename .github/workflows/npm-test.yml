@@ -44,8 +44,8 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5 # use the explicit version number
         with:
-          component: true
           runTests: false
+          start: npm run cy:run-component
   test-build-package:
     needs: [ test, cypress-run, cypress-run-component ]
     runs-on: ubuntu-latest
