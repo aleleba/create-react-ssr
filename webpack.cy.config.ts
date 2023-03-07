@@ -15,27 +15,15 @@ const dotEnvToParse = dotenv.config();
 const externalCss = process.env.EXTERNAL_CSS === 'true' ? true : false;
 const externalCssName = process.env.EXTERNAL_CSS_NAME ? process.env.EXTERNAL_CSS_NAME : 'index.css';
 const alias = resolveTsAliases(path.resolve('tsconfig.json'));
-const isWin = process.platform === 'win32';
-
 const copyPatterns: {from: string, to: string}[] = [];
 
-let copyFromUrl = `${path.resolve(__dirname)}/public/img`;
-let copyFromUrlWin = `${path.resolve(__dirname)}\\public\\img`;
-let copyToUrl = 'assets/img';
-let copyToUrlWin = 'assets\\img';
+const copyFromUrl = `${path.resolve(__dirname)}/public/img`;
+const copyToUrl = 'assets/img';
 
-if(isWin){
-	if(fs.existsSync(copyFromUrlWin)){
-		copyPatterns.push({
-			from: copyFromUrlWin, to: copyToUrlWin, 
-		});
-	}
-}else{
-	if(fs.existsSync(copyFromUrl)){
-		copyPatterns.push({
-			from: copyFromUrl, to: copyToUrl, 
-		});
-	}
+if(fs.existsSync(copyFromUrl)){
+	copyPatterns.push({
+		from: copyFromUrl, to: copyToUrl, 
+	});
 }
 
 export default {
