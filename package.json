@@ -16,7 +16,7 @@
     "check-updates": "npx npm-check-updates -u && npm i",
     "cy:open": "npx cypress open",
     "cy:run": "cypress run",
-    "cy:run-component": "npx cypress run --headless --component"
+    "cy:run-component": "cypress run --headless --component"
   },
   "repository": {
     "type": "git",
