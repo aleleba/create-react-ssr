@@ -12,8 +12,6 @@ import CopyPlugin from 'copy-webpack-plugin';
 import { resolveTsAliases } from 'resolve-ts-aliases';
 
 const dotEnvToParse = dotenv.config();
-const externalCss = process.env.EXTERNAL_CSS === 'true' ? true : false;
-const externalCssName = process.env.EXTERNAL_CSS_NAME ? process.env.EXTERNAL_CSS_NAME : 'index.css';
 const alias = resolveTsAliases(path.resolve('tsconfig.json'));
 const copyPatterns: {from: string, to: string}[] = [];
 
@@ -39,11 +37,9 @@ export default {
 	target: 'web',
 	plugins: [
 		new CleanWebpackPlugin(),
-		...(externalCss === true ? [
-			new MiniCssExtractPlugin({
-				filename: externalCssName,
-			}),
-		] : []),
+		new MiniCssExtractPlugin({
+			filename: 'index.css',
+		}),
 		new webpack.DefinePlugin({
 			'process.env': JSON.stringify(dotEnvToParse.parsed),
 		}),
@@ -70,7 +66,7 @@ export default {
 			{
 				test: /\.(css|sass|scss)$/,
 				use: [
-					externalCss === true ? MiniCssExtractPlugin.loader : 'style-loader',
+					MiniCssExtractPlugin.loader,
 					'css-loader',
 					'sass-loader',
 				], 
