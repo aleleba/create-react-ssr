@@ -7,6 +7,7 @@ const aliases = pathsToModuleNameMapper(compilerOptions.paths, {
 
 module.exports = {
 	setupFilesAfterEnv: ['<rootDir>/setupTest.ts'],
+	testPathIgnorePatterns: ['/node_modules/', '\\.cy.(js|jsx|ts|tsx)$'],
 	testEnvironment: 'jsdom',
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
 	modulePathIgnorePatterns: ['<rootDir>/cypress/'],
