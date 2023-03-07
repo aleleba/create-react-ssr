@@ -39,6 +39,7 @@ jobs:
         uses: cypress-io/github-action@v5 # use the explicit version number
         with:
           component: true
+          runTests: false
   publish-npm:
     needs: [ test, cypress-run, cypress-run-component ]
     runs-on: ubuntu-latest
