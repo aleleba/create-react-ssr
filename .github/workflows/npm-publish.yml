@@ -39,8 +39,6 @@ jobs:
         uses: cypress-io/github-action@v5 # use the explicit version number
         with:
           component: true
-          # quote the url to be safe against YML parsing surprises
-          wait-on: 'http://localhost:8080'
   publish-npm:
     needs: [ test, cypress-run, cypress-run-component ]
     runs-on: ubuntu-latest
