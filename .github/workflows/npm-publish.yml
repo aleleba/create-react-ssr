@@ -37,8 +37,6 @@ jobs:
       # and run all Cypress tests
       - name: Cypress run
         uses: cypress-io/github-action@v5 # use the explicit version number
-        env:
-          ENV: production
         with:
           component: true
   publish-npm:

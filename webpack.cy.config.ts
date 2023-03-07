@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
+import { config as envConfig } from './config';
 import webpack from 'webpack';
-import * as dotenv from 'dotenv';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
@@ -11,7 +11,6 @@ import ESLintPlugin from 'eslint-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import { resolveTsAliases } from 'resolve-ts-aliases';
 
-const dotEnvToParse = dotenv.config();
 const alias = resolveTsAliases(path.resolve('tsconfig.json'));
 const copyPatterns: {from: string, to: string}[] = [];
 
@@ -40,10 +39,10 @@ export default {
 		new MiniCssExtractPlugin({
 			filename: 'index.css',
 		}),
-		new webpack.DefinePlugin({
-			'process.env': JSON.stringify(dotEnvToParse.parsed),
-		}),
 		new ESLintPlugin(),
+		new webpack.EnvironmentPlugin({
+			...envConfig,
+		}),
 		new CopyPlugin({
 			patterns: copyPatterns
 		}),
