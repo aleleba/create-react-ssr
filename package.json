@@ -1,6 +1,6 @@
 {
   "name": "@aleleba/create-react-ssr",
-  "version": "3.8.2",
+  "version": "3.9.0",
   "description": "Starter Kit of server side render of react",
   "bin": "./bin/cli.js",
   "main": "src/server/index",
@@ -15,7 +15,8 @@
     "test:watch": "jest --watch",
     "check-updates": "npx npm-check-updates -u && npm i",
     "cy:open": "npx cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "cy:run-component": "npx cypress run --headless --component"
   },
   "repository": {
     "type": "git",
@@ -93,6 +94,7 @@
     "eslint-plugin-react": "^7.32.2",
     "eslint-webpack-plugin": "^4.0.0",
     "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
