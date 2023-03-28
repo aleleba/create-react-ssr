@@ -25,7 +25,7 @@
       "react-dom/next", 
       "node"
     ],
-    "sourceMap": true,
+    "sourceMap": false,
     "baseUrl": ".",
     "outDir": "build",
     "skipLibCheck": true,
