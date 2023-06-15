@@ -8,10 +8,10 @@ Tech(Library or Framework) | Version |
 --- | --- |
 React (Render Library) | 18.2.0
 Redux (Global State Management) | 4.2.1
-React Router DOM (Routing) | 6.11.1
+React Router DOM (Routing) | 6.13.0
 Jest (Testing) | 29.5.0
-Cypress (E2E Testing) | 12.11.0
-Typescript | 5.0.4
+Cypress (E2E Testing) | 12.14.0
+Typescript | 5.1.3
 
 ## Setup
 To create a new project run in the terminal:
