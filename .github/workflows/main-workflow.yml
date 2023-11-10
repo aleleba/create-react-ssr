@@ -1,9 +1,17 @@
-name: Testing package
+# This file contains the main workflow for the create-react-ssr project. It defines the steps and actions to be taken when the workflow is triggered.
+# Name of the workflow
+name: Main Workflow
 
+# Define the events that trigger the workflow
 on:
+  push:
+    branches: [ master ]
   pull_request:
     branches: ['*']
+
+# Define the jobs that run as part of the workflow
 jobs:
+  # Job to run tests
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -20,6 +28,8 @@ jobs:
         registry-url: https://registry.npmjs.org/
     - run: npm ci
     - run: npm test
+
+  # Job to run Cypress tests
   cypress-run:
     runs-on: ubuntu-latest
     env:
@@ -34,6 +44,8 @@ jobs:
         with:
           build: npm run build
           start: npm start
+
+  # Job to run Cypress component tests
   cypress-run-component:
     runs-on: ubuntu-latest
     steps:
@@ -45,7 +57,10 @@ jobs:
         uses: cypress-io/github-action@v5 # use the explicit version number
         with:
           component: true
+
+  # Job to build the package
   test-build-package:
+    if: github.ref != 'refs/heads/master'
     needs: [ test, cypress-run, cypress-run-component ]
     runs-on: ubuntu-latest
     steps:
@@ -56,3 +71,19 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
+
+  # Job to publish the package to NPM
+  publish-npm:
+    if: github.ref == 'refs/heads/master'
+    needs: [ test, cypress-run, cypress-run-component ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - run: npm publish --access=public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
