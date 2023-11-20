@@ -8,9 +8,9 @@ Tech(Library or Framework) | Version |
 --- | --- |
 React (Render Library) | 18.2.0
 Redux (Global State Management) | 4.2.1
-React Router DOM (Routing) | 6.18.0
+React Router DOM (Routing) | 6.19.0
 Jest (Testing) | 29.7.0
-Cypress (E2E Testing) | 13.5.0
+Cypress (E2E Testing) | 13.5.1
 Typescript | 5.2.2
 
 ## Setup
