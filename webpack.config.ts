@@ -68,7 +68,14 @@ const frontendConfig = {
 				test: /\.(css|sass|scss)$/,
 				use: [
 					MiniCssExtractPlugin.loader,
-					'css-loader',
+					{
+						'loader': 'css-loader',
+						'options': {
+							modules: {
+								auto: /\.module\.\w+$/i,
+							}
+						},
+					},
 					'sass-loader',
 				], 
 			},
@@ -174,7 +181,14 @@ const serverConfig = {
 				test: /\.(css|sass|scss)$/,
 				use: [
 					MiniCssExtractPlugin.loader,
-					'css-loader',
+					{
+						'loader': 'css-loader',
+						'options': {
+							modules: {
+								auto: /\.module\.\w+$/i,
+							}
+						},
+					},
 					'sass-loader',
 				], 
 			},
