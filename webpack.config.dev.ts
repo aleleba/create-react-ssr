@@ -63,7 +63,14 @@ const config: Configuration = {
 				test: /\.(css|sass|scss)$/,
 				use: [
 					MiniCssExtractPlugin.loader,
-					'css-loader',
+					{
+						'loader': 'css-loader',
+						'options': {
+							modules: {
+								auto: /\.module\.\w+$/i,
+							}
+						},
+					},
 					'sass-loader',
 				], 
 			},
