@@ -7,11 +7,11 @@ It is not a project like create-react-app, create-react-app is used as a starter
 Tech(Library or Framework) | Version |
 --- | --- |
 React (Render Library) | 18.2.0
-Redux (Global State Management) | 4.2.1
-React Router DOM (Routing) | 6.19.0
+Redux (Global State Management) | 5.0.1
+React Router DOM (Routing) | 6.21.1
 Jest (Testing) | 29.7.0
-Cypress (E2E Testing) | 13.6.0
-Typescript | 5.3.2
+Cypress (E2E Testing) | 13.6.2
+Typescript | 5.3.3
 
 ## Setup
 To create a new project run in the terminal:
