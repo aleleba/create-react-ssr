@@ -26,7 +26,7 @@ jobs:
         node-version: 16
         cache: 'npm'
         registry-url: https://registry.npmjs.org/
-    - run: npm ci
+    - run: npm ci --legacy-peer-deps
     - run: npm test
 
   # Job to run Cypress component tests
@@ -37,10 +37,13 @@ jobs:
         uses: actions/checkout@v3
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
       - name: Cypress run
-        uses: cypress-io/github-action@v5 # use the explicit version number
+        uses: cypress-io/github-action@v6 # use the explicit version number
         with:
           component: true
+          install: false
   
   # Job to run Cypress End to End tests
   end-to-end-testing:
@@ -52,9 +55,12 @@ jobs:
         uses: actions/checkout@v3
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
       - name: Cypress run
-        uses: cypress-io/github-action@v5 # use the explicit version number
+        uses: cypress-io/github-action@v6 # use the explicit version number
         with:
+          install: false
           build: npm run build
           start: npm start
 
@@ -69,7 +75,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
       - run: npm run build
 
   # Job to publish the package to NPM
@@ -83,7 +89,7 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
+      - run: npm ci --legacy-peer-deps
       - run: npm publish --access=public
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
