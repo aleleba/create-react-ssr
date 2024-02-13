@@ -43,6 +43,7 @@ jobs:
         uses: cypress-io/github-action@v5 # use the explicit version number
         with:
           component: true
+          install: false
   
   # Job to run Cypress End to End tests
   end-to-end-testing:
@@ -59,6 +60,7 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v5 # use the explicit version number
         with:
+          install: false
           build: npm run build
           start: npm start
 
