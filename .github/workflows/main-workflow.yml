@@ -92,4 +92,4 @@ jobs:
       - run: npm ci --legacy-peer-deps
       - run: npm publish --access=public
         env:
-          NPM_PERSONAL_TOKEN: ${{secrets.NPM_PERSONAL_TOKEN}}
+          NPM_PERSONAL_TOKEN: ${{secrets.npm_token}}
