@@ -73,10 +73,10 @@ if(ENV === 'development'){
 }
 
 const setResponse = (html, preloadedState, manifest) => {
-	const mainStyles = manifest ? manifest['frontend.css'] : 'assets/main.css';
-	const vendorStyles = manifest ? manifest['vendors.css'] : 'assets/vendors.css';
-	const mainBuild = manifest ? manifest['frontend.js'] : 'assets/app.js';
-	const vendorBuild = manifest ? manifest['vendors.js'] : 'assets/vendor.js';
+	const mainStyles = manifest ? `/${manifest['frontend.css']}` : '/assets/main.css';
+	const vendorStyles = manifest ? `/${manifest['vendors.css']}` : '/assets/vendors.css';
+	const mainBuild = manifest ? `/${manifest['frontend.js']}` : '/assets/app.js';
+	const vendorBuild = manifest ? `/${manifest['vendors.js']}` : '/assets/vendor.js';
 	const manifestJson = manifest ? `<link rel="manifest" href="${manifest['manifest.json']}">` : '';
 	const memoryFs = compiler.outputFileSystem;
 	const haveVendor = haveVendorsCss(manifest, memoryFs);
