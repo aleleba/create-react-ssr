@@ -14,7 +14,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
 //Router
-import { StaticRouter } from 'react-router-dom/server';
+import { StaticRouter } from 'react-router-dom';
 import routes from '../routes';
 //Redux
 import { Provider } from 'react-redux';
