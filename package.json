@@ -69,6 +69,7 @@
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.27.0",
+    "@cypress/react": "^9.0.1",
     "@eslint/js": "^9.23.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.15",
     "@redux-devtools/extension": "^3.3.0",
