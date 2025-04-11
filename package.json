@@ -1,6 +1,6 @@
 {
   "name": "@aleleba/create-react-ssr",
-  "version": "3.9.31",
+  "version": "3.9.32",
   "description": "Starter Kit of server side render of react",
   "bin": "./bin/cli.js",
   "main": "src/server/index",
@@ -78,7 +78,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.14.0",
-    "@types/react": "^19.1.0",
+    "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.2",
     "@types/webpack": "^5.28.5",
     "@types/webpack-hot-middleware": "^2.25.9",
