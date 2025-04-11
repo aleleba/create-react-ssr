@@ -129,7 +129,7 @@ const renderApp = (req, res, next) => {
 };
 
 app
-	.get(/\*/, renderApp);
+	.get('/{*splat}', renderApp);
 
 app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
