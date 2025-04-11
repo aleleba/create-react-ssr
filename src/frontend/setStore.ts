@@ -3,8 +3,7 @@ import { legacy_createStore as createStore} from 'redux'; //, applyMiddleware
 // import { Provider } from 'react-redux';
 import { composeWithDevTools as composeWithDevToolsWeb } from '@redux-devtools/extension';
 import { config } from '../../config';
-import reducer, { IInitialState } from './reducers';
-
+import reducer, { IInitialState } from '@reducers';
 
 const { ENV } = config;
 
@@ -15,11 +14,11 @@ const composeEnhancers = composeWithDevToolsWeb({
 const setStore = ({ initialState }: { initialState: IInitialState | undefined }) => {
 	const store = ENV === 'development' ? createStore(
 		reducer,
-		initialState,
+		initialState as any,
 		composeEnhancers(),
 	) : createStore(
 		reducer,
-		initialState,
+		initialState as any,
 	);
 	return store;
 };

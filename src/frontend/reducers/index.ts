@@ -1,10 +1,6 @@
 import { combineReducers } from 'redux';
 import testReducer from './testReducer';
-import { IChangeHelloPayload } from '../actions/testAction';
-
-export interface IInitialState {
-	testReducer?: IChangeHelloPayload | undefined
-}
+export * from './initialState';
 
 const rootReducer = combineReducers({
 	// Here comes the reducers

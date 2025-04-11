@@ -4,7 +4,7 @@ export const deFaultValues = {
 	PUBLIC_URL: 'auto',
 	PREFIX_URL: '',
 	ONLY_EXACT_PATH: false,
-}
+};
 
 export const config = {
 	ENV: process.env.ENV ? process.env.ENV : deFaultValues.ENV,
@@ -14,4 +14,4 @@ export const config = {
 	ONLY_EXACT_PATH: process.env.ONLY_EXACT_PATH ? process.env.ONLY_EXACT_PATH === 'true' : deFaultValues.ONLY_EXACT_PATH,
 };
 
-export default config
+export default config;

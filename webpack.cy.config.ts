@@ -23,6 +23,12 @@ if(fs.existsSync(copyFromUrl)){
 	});
 }
 
+if(fs.existsSync(`${path.resolve(__dirname)}/public/fonts`)){
+	copyPatterns.push({
+		from: `${path.resolve(__dirname)}/public/fonts`, to: 'assets/fonts', 
+	});
+}
+
 export default {
 	entry: './src/frontend/components/index.tsx',
 	resolve: {
@@ -71,7 +77,16 @@ export default {
 						'options': {
 							modules: {
 								auto: /\.module\.\w+$/i,
-							}
+							},
+							url: {
+								filter: (url) => {
+								  // No procesar URLs absolutas que comienzan con /
+								  if (url.startsWith('/')) {
+									return false;
+								  }
+								  return true;
+								}
+							},
 						},
 					},
 					'sass-loader',

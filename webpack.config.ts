@@ -41,6 +41,12 @@ if(fs.existsSync(`${ROOT_DIR}/public/img`)){
 	});
 }
 
+if(fs.existsSync(`${ROOT_DIR}/public/fonts`)){
+	copyPatterns.push({
+		from: `${ROOT_DIR}/public/fonts`, to: 'assets/fonts', 
+	});
+}
+
 const frontendConfig = {
 	entry: {
 		frontend: `${ROOT_DIR}/src/frontend/index.tsx`,
@@ -73,7 +79,16 @@ const frontendConfig = {
 						'options': {
 							modules: {
 								auto: /\.module\.\w+$/i,
-							}
+							},
+							url: {
+								filter: (url) => {
+								  // No procesar URLs absolutas que comienzan con /
+								  if (url.startsWith('/')) {
+									return false;
+								  }
+								  return true;
+								}
+							},
 						},
 					},
 					'sass-loader',

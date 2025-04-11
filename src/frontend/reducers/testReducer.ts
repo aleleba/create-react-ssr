@@ -1,10 +1,10 @@
-import { TAction } from '../actions';
+import { TTest } from '@actions';
 
 const initialState = {
 	hello: 'world'
 };
 
-const testReducer = (state = initialState, action: TAction) => {
+const testReducer = (state = initialState, action: TTest) => {
 	switch (action.type){
 	case 'CHANGE_HELLO': {
 		const newHello = action.payload.hello;

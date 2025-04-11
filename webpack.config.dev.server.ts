@@ -49,7 +49,16 @@ const config: Configuration = {
 						'options': {
 							modules: {
 								auto: /\.module\.\w+$/i,
-							}
+							},
+							url: {
+								filter: (url) => {
+								  // No procesar URLs absolutas que comienzan con /
+								  if (url.startsWith('/')) {
+									return false;
+								  }
+								  return true;
+								}
+							},
 						},
 					},
 					'sass-loader',
