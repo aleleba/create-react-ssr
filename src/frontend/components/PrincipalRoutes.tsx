@@ -4,7 +4,7 @@ import { useRoutes } from 'react-router-dom';
 import routes from '../../routes';
 
 const PrincipalRoutes = () => {
-	let element = useRoutes(routes);
+	const element = useRoutes(routes);
 	return element;
 };
 

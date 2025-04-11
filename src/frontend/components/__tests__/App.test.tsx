@@ -4,20 +4,20 @@ import { ProviderMock } from '@mocks';
 import App from '@components/App';
 
 describe('<App/> Component', () => {
-    beforeEach(() => {
-        fetchMock.resetMocks();
-    });
+	beforeEach(() => {
+		fetchMock.resetMocks();
+	});
 
-    it('Should render root <App /> Component', async () => {
-        fetchMock.mockResponseOnce(JSON.stringify({
-            //First Data Fetch
-            data: 'data'
-        }));
+	it('Should render root <App /> Component', async () => {
+		fetchMock.mockResponseOnce(JSON.stringify({
+			//First Data Fetch
+			data: 'data'
+		}));
 
-        render(
-            <ProviderMock>
-                <App />
-            </ProviderMock>
-        )
-    })
-})
+		render(
+			<ProviderMock>
+				<App />
+			</ProviderMock>
+		);
+	});
+});

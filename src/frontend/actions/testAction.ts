@@ -14,12 +14,12 @@ export interface IChangeHelloPayload {
 export type TTest = IChangeHello
 
 const changeHello = (payload: string) => ({
-    type: ActionTypesTest.ChangeHello,
-    payload
-})
+	type: ActionTypesTest.ChangeHello,
+	payload
+});
 
 const actions = {
-    changeHello
-}
+	changeHello
+};
 
-export default actions
+export default actions;

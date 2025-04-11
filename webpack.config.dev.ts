@@ -35,6 +35,12 @@ if(fs.existsSync(`${ROOT_DIR}/../public/img`)){
 	});
 }
 
+if(fs.existsSync(`${ROOT_DIR}/../public/fonts`)){
+	copyPatterns.push({
+		from: `${ROOT_DIR}/../public/fonts`, to: 'assets/fonts', 
+	});
+}
+
 const config: Configuration = {
 	entry: [`webpack-hot-middleware/client?path=${envConfig.PREFIX_URL}/reload_wss&timeout=2000&reload=true&autoConnect=true`, `${ROOT_DIR}/../src/frontend/index.tsx`],
 	output: {
@@ -68,7 +74,16 @@ const config: Configuration = {
 						'options': {
 							modules: {
 								auto: /\.module\.\w+$/i,
-							}
+							},
+							url: {
+								filter: (url) => {
+								  // No procesar URLs absolutas que comienzan con /
+								  if (url.startsWith('/')) {
+									return false;
+								  }
+								  return true;
+								}
+							},
 						},
 					},
 					'sass-loader',
