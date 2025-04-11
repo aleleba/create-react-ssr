@@ -15,11 +15,11 @@ jobs:
   unit-front-end-testing:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js lts
-      uses: actions/setup-node@v3
+    - uses: actions/checkout@v4
+    - name: Use Node.js LTS
+      uses: actions/setup-node@v4
       with:
-        node-version: lts
+        node-version: 'lts/*'
         cache: 'npm'
         registry-url: https://registry.npmjs.org/
     - run: npm ci
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Install dependencies
@@ -48,7 +48,7 @@ jobs:
       PORT: 3000
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # Install NPM dependencies, cache them correctly
       # and run all Cypress tests
       - name: Install dependencies
@@ -66,10 +66,10 @@ jobs:
     needs: [ unit-front-end-testing, cypress-components-testing, end-to-end-testing ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: lts
+          node-version: 'lts/*'
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run build
@@ -80,10 +80,10 @@ jobs:
     needs: [ unit-front-end-testing, cypress-components-testing, end-to-end-testing ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 'lts/*'
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm publish --access=public
