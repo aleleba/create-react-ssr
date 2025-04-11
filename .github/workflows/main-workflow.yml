@@ -92,4 +92,4 @@ jobs:
       - run: npm ci
       - run: npm publish --access=public
         env:
-          NPM_PERSONAL_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
