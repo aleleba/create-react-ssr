@@ -46,6 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PORT: 3000
+      PUBLIC_URL: /
     steps:
       - name: Checkout
         uses: actions/checkout@v4
