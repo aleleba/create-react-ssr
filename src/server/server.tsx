@@ -131,6 +131,19 @@ const renderApp = (req, res, next) => {
 app
 	.get('/{*splat}', renderApp);
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
 	console.log(`Server running on port ${PORT}`);
 });
+
+// --- HMR Support ---
+if (module.hot) {
+	module.hot.accept();
+	module.hot.dispose(() => {
+		console.log('🔁 [HMR] Disposing backend module...');
+		if (server) {
+			server.close(() => {
+				console.log('🛑 Server closed due to HMR');
+			});
+		}
+	});
+}
