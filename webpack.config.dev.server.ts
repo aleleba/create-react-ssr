@@ -3,7 +3,7 @@ import webpackNodeExternals from 'webpack-node-externals';
 import WebpackShellPluginNext from 'webpack-shell-plugin-next';
 import { resolveTsAliases } from 'resolve-ts-aliases';
 import path from 'path';
-import { Configuration } from 'webpack';
+import webpack, { Configuration } from 'webpack';
 const ROOT_DIR = path.resolve(__dirname);
 const resolvePath = (...args: string[]) => path.resolve(ROOT_DIR, ...args);
 const BUILD_DIR = resolvePath('build');
@@ -18,7 +18,18 @@ const config: Configuration = {
 	mode: 'development',
 	name: 'server',
 	entry: {
-		server: `${ROOT_DIR}/src/server/index.ts`,
+		server: [
+            'webpack/hot/poll?1000',
+            `${ROOT_DIR}/src/server/index.ts`
+        ],
+	},
+	watchOptions: {
+		ignored: [
+		  '**/src/frontend/**',
+		  '**/public/**',
+		  '**/build/**',
+		  '**/node_modules/**'
+		]
 	},
 	resolve: {
 		extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
@@ -88,8 +99,11 @@ const config: Configuration = {
 		libraryTarget: 'commonjs2',
 	},
 	node: false,
-	externals: [webpackNodeExternals()],
+	externals: [webpackNodeExternals({
+		allowlist: ['webpack/hot/poll?1000']
+	})],
 	plugins: [
+		new webpack.HotModuleReplacementPlugin(),
 		new MiniCssExtractPlugin({
 			filename: 'assets/app.css',
 		}),
