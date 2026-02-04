@@ -10,7 +10,7 @@ React (Render Library) | 19.2.4
 Redux (Global State Management) | 5.0.1
 React Router DOM (Routing) | 7.13.0
 Jest (Testing) | 30.2.0
-Cypress (E2E Testing) | 15.9.0
+Cypress (E2E Testing) | 15.10.0
 Typescript | 5.9.3
 
 ## Setup
