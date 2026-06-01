@@ -30,6 +30,7 @@
     "outDir": "build",
     "skipLibCheck": true,
     "noImplicitAny": false,
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@components/*": ["src/frontend/components/*"],
       "@components": ["src/frontend/components"],
