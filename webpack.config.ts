@@ -1,6 +1,6 @@
 import path  from 'path';
 import fs from 'fs';
-import { config as envConfig } from './config';
+import { config as envConfig } from './config/index.ts';
 import webpack from 'webpack';
 import CompressionWebpackPlugin from 'compression-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -11,12 +11,12 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ESLintPlugin from 'eslint-webpack-plugin';
 import CopyPlugin from 'copy-webpack-plugin';
 import { resolveTsAliases } from 'resolve-ts-aliases';
+import { InjectManifest } from 'workbox-webpack-plugin';
+import nodeExternals from 'webpack-node-externals';
 
 const ROOT_DIR = path.resolve(__dirname);
 const resolvePath = (...args) => path.resolve(ROOT_DIR, ...args);
 const BUILD_DIR = resolvePath('build');
-const { InjectManifest } = require('workbox-webpack-plugin');
-const nodeExternals = require('webpack-node-externals');
 const alias = resolveTsAliases(path.resolve('tsconfig.json'));
 
 const copyPatterns = [

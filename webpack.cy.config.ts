@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import { config as envConfig } from './config';
+import { config as envConfig } from './config/index.ts';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
