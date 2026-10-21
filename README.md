@@ -6,11 +6,11 @@ It is not a project like create-react-app, create-react-app is used as a starter
 
 Tech(Library or Framework) | Version |
 --- | --- |
-React (Render Library) | 19.3.0
+React (Render Library) | 19.3.1
 Redux (Global State Management) | 5.0.1
 React Router DOM (Routing) | 7.18.4
 Jest (Testing) | 30.5.2
-Cypress (E2E Testing) | 16.1.1
+Cypress (E2E Testing) | 16.2.0
 Typescript | 6.0.3
 
 ## Setup
